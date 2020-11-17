@@ -18,7 +18,7 @@ public class AccountServiceImpl implements AccountService {
 	* Create personal account, without num of employees
 	 */
 	@Override
-	public Account createPersonalAccount(AccountType accountType, String accountNumber, String customerName, String street, String city, String state, String zip, LocalDate birthday, String email) {
+	public Account createAccount(AccountType accountType, String accountNumber, String customerName, String street, String city, String state, String zip, LocalDate birthday, String email) {
 		Account account = new Account(accountNumber);
 		Customer customer = new Customer(customerName, street, city, state, zip, email);
 		customer.setBirthday(birthday);
@@ -32,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
 	/*
 	* create company account, without birthday
 	 */
-	public Account createCompanyAccount(AccountType accountType, String accountNumber, String customerName, String street, String city, String state, String zip, int numofEmployees, String email) {
+	public Account createAccount(AccountType accountType, String accountNumber, String customerName, String street, String city, String state, String zip, int numofEmployees, String email) {
 		Account account = new Account(accountNumber);
 		Customer customer = new Customer(customerName, street, city, state, zip, email);
 		customer.setNumofemployees(numofEmployees);

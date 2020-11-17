@@ -40,12 +40,17 @@ public class Account extends Observable {
 		AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
 		entryList.add(entry);
 		//TODO: check amount and call measureChanges
+		if (amount > 500)
+			this.measureChanges(entry);
 	}
 
 	public void withdraw(double amount) {
 		AccountEntry entry = new AccountEntry(-amount, "withdraw", "", "");
-		entryList.add(entry);
 		//TODO: check amount and call measureChanges
+		if (this.getBalance() < amount)
+			this.measureChanges(entry);
+		else
+			entryList.add(entry);
 	}
 
 	public void interest(double amount) {
