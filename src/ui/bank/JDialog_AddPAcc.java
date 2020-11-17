@@ -3,7 +3,13 @@ package ui.bank;
 		A basic implementation of the JDialog class.
 */
 
+import sun.util.resources.de.LocaleNames_de;
+import ui.framework.common.AccountService;
+import ui.framework.common.AccountServiceImpl;
+import ui.framework.common.AccountType;
+
 import java.awt.*;
+import java.time.LocalDate;
 import javax.swing.*;
 
 public class JDialog_AddPAcc extends JDialog
@@ -183,7 +189,17 @@ public class JDialog_AddPAcc extends JDialog
            else
            parentframe.accountType="S";
 	   parentframe.newaccount=true;
-       dispose();
+	   // create account service
+		AccountService service = new AccountServiceImpl();
+//		createAccount(AccountType accountType, String accountNumber, String customerName,
+//				String street, String city, String state, String zip, LocalDate birthday, String email);
+		if (JRadioButton_Chk.isSelected())
+			service.createPersonalAccount(AccountType.CHECKING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
+					JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText(), LocalDate.parse(JTextField_BD.getText()) ,JTextField_EM.getText());
+       	else
+			service.createPersonalAccount(AccountType.SAVING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
+					JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText(), LocalDate.parse(JTextField_BD.getText()) ,JTextField_EM.getText());
+		dispose();
 	}
 
 	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event)
