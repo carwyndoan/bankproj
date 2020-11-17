@@ -1,6 +1,7 @@
 package framework.common;
 
 import framework.bank.InterestCalculation;
+import framework.creditcard.CreditCardStrategyInterface;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,6 +16,10 @@ public class Account extends Observable {
 	private List<AccountEntry> entryList = new ArrayList<AccountEntry>();
 
 	private InterestCalculation interestCalculation;
+
+	private CreditCardStrategyInterface ccinterestCalculation;
+
+	private AccountType accountType;
 
 	public Account(String accountNumber) {
 		this.accountNumber = accountNumber;
@@ -84,12 +89,28 @@ public class Account extends Observable {
 		this.customer = customer;
 	}
 
+	public AccountType getAccountType() {
+		return accountType;
+	}
+
+	public void setAccountType(AccountType accountType) {
+		this.accountType = accountType;
+	}
+
 	public Collection<AccountEntry> getEntryList() {
 		return entryList;
 	}
 
 	public void setInterestCalculation(InterestCalculation interestCalculation) {
 		this.interestCalculation = interestCalculation;
+	}
+
+	public CreditCardStrategyInterface getCcinterestCalculation() {
+		return ccinterestCalculation;
+	}
+
+	public void setCcinterestCalculation(CreditCardStrategyInterface ccinterestCalculation) {
+		this.ccinterestCalculation = ccinterestCalculation;
 	}
 
 	public void measureChanges(AccountEntry entry) {
@@ -102,5 +123,10 @@ public class Account extends Observable {
 		double interest = interestCalculation.getInterest();
 		double totalInterest = this.getBalance() * interest;
 		this.interest(totalInterest);
+	}
+
+	public String billingReport() {
+		//TODO: return record of accumulate billing of account
+		return "";
 	}
 }
