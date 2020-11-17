@@ -93,6 +93,8 @@ public class Account extends Observable {
 
 	public void calculateInterest(){
 		//TODO: get interest, calculate amount, call interest
-
+		double interest = interestCalculation.getInterest();
+		double totalInterest = this.getBalance()*interest;
+		this.interest(totalInterest);
 	}
 }
