@@ -4,6 +4,7 @@ import edu.miu.finalProject.Account;
 import edu.miu.finalProject.dao.CreditCardDAO;
 import edu.miu.finalProject.dao.impl.CreditCardDAOImpl;
 import edu.miu.finalProject.domain.*;
+import edu.miu.finalProject.observer.EmailSender;
 import edu.miu.finalProject.service.CreditCardService;
 import edu.miu.finalProject.strategyInterface.BronzeCreditCard;
 import edu.miu.finalProject.strategyInterface.GoldCreditCard;
@@ -33,6 +34,7 @@ public class CreditCardServiceImpl  implements CreditCardService {
             creditCard1.setInterest(new BronzeCreditCard());
 
         }
+        creditCard1.addObserver(new EmailSender());
         accountDao.save(creditCard1);
         return creditCard1;
     }

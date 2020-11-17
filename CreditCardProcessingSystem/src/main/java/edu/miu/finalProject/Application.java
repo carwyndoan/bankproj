@@ -15,16 +15,16 @@ public class Application {
         accountService.createCreditCard("4253893", "John Doe", "bronze");
 
         // use account 1;
-        accountService.deposit("4253891", 240);
-        accountService.deposit("4253892", 529);
-        accountService.deposit("4253893", 529);
+        accountService.deposit("4253891", 100);
+        accountService.deposit("4253892", 100);
+        accountService.deposit("4253893", 100);
 
-        accountService.chargeAccount("4253892", 230);
-        // use account 2;
-        accountService.deposit("4253893", 12450);
+//        accountService.chargeAccount("4253892", 250);
+        //use account 2;
+//        accountService.deposit("4253893", 12450);
         accountService.transferFunds("4253892", "4253891", 100, "payment of invoice 10232");
         // show balances
-//        accountService.addInterest();
+        accountService.addInterest();
 
 
         for (Account account : accountService.getAllAccounts()) {

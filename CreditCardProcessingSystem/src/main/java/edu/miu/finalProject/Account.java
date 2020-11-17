@@ -2,13 +2,14 @@ package edu.miu.finalProject;
 
 import edu.miu.finalProject.dao.AccountEntry;
 import edu.miu.finalProject.domain.Customer;
+import edu.miu.finalProject.observer.Subject;
 import edu.miu.finalProject.strategyInterface.StrategyInterface;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class Account {
+public class Account extends Subject {
 
     private Customer customer;
 
@@ -51,11 +52,15 @@ public class Account {
     public void deposit(double amount) {
         AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
         entryList.add(entry);
+        notifyObserver(this);
     }
 
     public void withdraw(double amount) {
         AccountEntry entry = new AccountEntry(-amount, "withdraw", "", "");
         entryList.add(entry);
+        if(amount > 400) {
+            notifyObserver(this);
+        }
     }
 
     private void addEntry(AccountEntry entry) {
@@ -71,6 +76,7 @@ public class Account {
         entryList.add(fromEntry);
 
         toAccount.addEntry(toEntry);
+        notifyObserver(this);
     }
 
     public String getAccountType() {
@@ -103,6 +109,14 @@ public class Account {
 
     public void setEntryList(List<AccountEntry> entryList) {
         this.entryList = entryList;
+    }
+
+    public void setInterest() {
+        System.out.println("Account Number: " + accountNumber + " Account Type: " + getAccountType() + " Account Balance: " + getBalance() + " Interest: " + interest.computeInterest(getBalance()));
+        AccountEntry entry = new AccountEntry(interest.computeInterest(getBalance()), "interest", "","");
+        entryList.add(entry);
+        System.out.println("New Balance after adding interest: " + getBalance());
+        System.out.println("-----------------------------------------------------------") ;
     }
 
 }
