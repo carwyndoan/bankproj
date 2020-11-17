@@ -1,6 +1,6 @@
 package edu.miu.finalProject.service.impl;
 
-import edu.miu.finalProject.Account;
+import edu.miu.finalProject.domain.Account;
 import edu.miu.finalProject.dao.CreditCardDAO;
 import edu.miu.finalProject.dao.impl.CreditCardDAOImpl;
 import edu.miu.finalProject.domain.*;
@@ -20,9 +20,10 @@ public class CreditCardServiceImpl  implements CreditCardService {
     }
 
     //createAccount
-    public Account createCreditCard(String accountNumber, String customerName, String accountType) {
+    public Account createCreditCard(String accountNumber, String customerName, String accountType, String email) {
         CreditCard creditCard1 = new CreditCard(accountNumber, accountType);
         Customer customer = new Customer(customerName);
+        customer.setEmail(email);
         creditCard1.setCustomer(customer);
         if (accountType.equalsIgnoreCase("Gold")) {
             creditCard1.setInterest(new GoldCreditCard());
