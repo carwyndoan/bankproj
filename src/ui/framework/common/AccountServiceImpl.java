@@ -2,6 +2,7 @@ package ui.framework.common;
 
 import ui.framework.bank.ChekingInterestCalculation;
 import ui.framework.bank.SavingInterestCalculation;
+import ui.framework.creditcard.CreditCard;
 
 import java.time.LocalDate;
 import java.util.Collection;
