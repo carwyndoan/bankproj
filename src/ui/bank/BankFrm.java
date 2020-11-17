@@ -289,6 +289,8 @@ public class BankFrm extends JFrame {
     void JButtonAddinterest_actionPerformed(ActionEvent event) {
         JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts", "Add interest to all accounts", JOptionPane.WARNING_MESSAGE);
 	    AccountService service =  AccountServiceImpl.getInstance();
-	    service.getAllAccounts().forEach(account -> account.calculateInterest());
+	    service.getAllAccounts().forEach(account -> {
+	        account.calculateInterest();
+	    });
     }
 }
