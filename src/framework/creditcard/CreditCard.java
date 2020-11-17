@@ -32,7 +32,6 @@ public class CreditCard extends Account {
 
     @Override
     public void calculateInterest() {
-        //TODO: get interest, calculate amount, call interest
         double interest = getCcinterestCalculation().monthlyInterest();
         double totalInterest = this.getBalance() * interest;
         this.interest(totalInterest);
