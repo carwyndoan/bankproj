@@ -1,13 +1,11 @@
 package ui.bank;
 
-import ui.framework.common.AccountService;
-import ui.framework.common.AccountServiceImpl;
-import ui.framework.common.AccountType;
+import framework.common.AccountService;
+import framework.common.AccountServiceImpl;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
-import java.time.LocalDate;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 
@@ -289,9 +287,7 @@ public class BankFrm extends JFrame {
 
     void JButtonAddinterest_actionPerformed(ActionEvent event) {
         JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts", "Add interest to all accounts", JOptionPane.WARNING_MESSAGE);
-	    AccountService service =  AccountServiceImpl.getInstance();
-	    service.getAllAccounts().forEach(account -> {
-	        account.calculateInterest();
-	    });
+	    AccountService service =  new AccountServiceImpl();
+	    service.calculateInterest();
     }
 }

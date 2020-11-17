@@ -3,10 +3,11 @@ package ui.bank;
 		A basic implementation of the JDialog class.
 */
 
-import sun.util.resources.de.LocaleNames_de;
-import ui.framework.common.AccountService;
-import ui.framework.common.AccountServiceImpl;
-import ui.framework.common.AccountType;
+import framework.bank.PersonalChekingInterestCalculation;
+import framework.bank.PersonalSavingInterestCalculation;
+import framework.common.Account;
+import framework.common.AccountService;
+import framework.common.AccountServiceImpl;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -188,19 +189,21 @@ public class JDialog_AddPAcc extends JDialog
        parentframe.state=JTextField_ST.getText();
        if (JRadioButton_Chk.isSelected())
            parentframe.accountType="Ch";
-           else
+       else
            parentframe.accountType="S";
 	   parentframe.newaccount=true;
 	   // create account service
-		AccountService service =  AccountServiceImpl.getInstance();
-//		createAccount(AccountType accountType, String accountNumber, String customerName,
-//				String street, String city, String state, String zip, LocalDate birthday, String email);
-		if (JRadioButton_Chk.isSelected())
-			service.createAccount(AccountType.CHECKING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
-					JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText(), LocalDate.parse(JTextField_BD.getText()) ,JTextField_EM.getText());
-       	else
-			service.createAccount(AccountType.SAVING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
-					JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText(), LocalDate.parse(JTextField_BD.getText()) ,JTextField_EM.getText());
+		AccountService service =  new AccountServiceImpl();
+
+		Account account = service.createAccount(parentframe.accountnr, parentframe.clientName, parentframe.street,
+				parentframe.city, parentframe.state, parentframe.zip, JTextField_EM.getText());
+		account.getCustomer().setBirthday(LocalDate.parse(JTextField_BD.getText()));
+
+		if (parentframe.accountType.equals("Ch"))
+			account.setInterestCalculation(new PersonalChekingInterestCalculation());
+		else
+			account.setInterestCalculation(new PersonalSavingInterestCalculation());
+
 		dispose();
 	}
 

@@ -1,12 +1,14 @@
 package ui.bank;
 
-import ui.framework.common.Account;
-import ui.framework.common.AccountService;
-import ui.framework.common.AccountServiceImpl;
-import ui.framework.common.AccountType;
+import framework.bank.CompanyChekingInterestCalculation;
+import framework.bank.CompanySavingInterestCalculation;
+import framework.bank.PersonalChekingInterestCalculation;
+import framework.bank.PersonalSavingInterestCalculation;
+import framework.common.Account;
+import framework.common.AccountService;
+import framework.common.AccountServiceImpl;
 
 import java.awt.*;
-import java.time.LocalDate;
 import javax.swing.*;
 
 
@@ -143,23 +145,23 @@ public class JDialog_AddCompAcc extends JDialog {
         parentframe.city = JTextField_CT.getText();
         parentframe.zip = JTextField_ZIP.getText();
         parentframe.state = JTextField_ST.getText();
+
         if (JRadioButton_Chk.isSelected())
             parentframe.accountType = "Ch";
         else
             parentframe.accountType = "S";
         parentframe.newaccount = true;
         // create account service
-        AccountService service =  AccountServiceImpl.getInstance();
-//		createAccount(AccountType accountType, String accountNumber, String customerName, String street,
-//		String city, String state, String zip, int numofEmployees, String email)
+        AccountService service =  new AccountServiceImpl();
+
+        Account account = service.createAccount(parentframe.accountnr, parentframe.clientName, parentframe.street,
+                parentframe.city, parentframe.state, parentframe.zip, JTextField_EM.getText());
+        account.getCustomer().setNumofemployees(Integer.parseInt(JTextField_NoOfEmp.getText()));
 
         if (JRadioButton_Chk.isSelected())
-
-            service.createAccount(AccountType.CHECKING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
-                    JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText(), 0, JTextField_EM.getText());
+            account.setInterestCalculation(new CompanyChekingInterestCalculation());
         else
-            service.createAccount(AccountType.SAVING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
-                    JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText(), 0, JTextField_EM.getText());
+            account.setInterestCalculation(new CompanySavingInterestCalculation());
 
         dispose();
 

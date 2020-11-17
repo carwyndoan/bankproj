@@ -1,4 +1,4 @@
-package ui.framework.common;
+package framework.common;
 
 import java.util.Observable;
 import java.util.Observer;
