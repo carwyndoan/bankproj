@@ -31,6 +31,12 @@ public class CreditCard extends Account {
     }
 
     @Override
+    public void withdraw(double amount) {
+        //TODO: compare with limit
+        super.withdraw(amount);
+    }
+
+    @Override
     public void calculateInterest() {
         double interest = getCcinterestCalculation().monthlyInterest();
         double totalInterest = this.getBalance() * interest;
