@@ -1,10 +1,12 @@
 package ui.bank;
+import ui.framework.common.AccountService;
+import ui.framework.common.AccountServiceImpl;
+
 import java.awt.*;
 import javax.swing.*;
 
 public class JDialog_Deposit extends JDialog
 {
-    
 
     private BankFrm parentframe;
     private String accnr;
@@ -83,6 +85,8 @@ public class JDialog_Deposit extends JDialog
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
 	{
         parentframe.amountDeposit=JTextField_Deposit.getText();
+		AccountService service = new AccountServiceImpl();
+		service.deposit(JTextField_NAME.getText(), Integer.parseInt(JTextField_Deposit.getText()));
         dispose();
 	}
 

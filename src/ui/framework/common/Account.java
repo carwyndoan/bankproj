@@ -93,5 +93,6 @@ public class Account extends Observable {
 
 	public void calculateInterest(){
 		//TODO: get interest, calculate amount, call interest
+
 	}
 }

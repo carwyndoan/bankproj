@@ -80,6 +80,8 @@ public class JDialog_AddPAcc extends JDialog
 		JTextField_ZIP.setBounds(84,180,156,20);
 		getContentPane().add(JTextField_BD);
 		JTextField_BD.setBounds(84,204,156,20);
+		JTextField_BD.setText("yyyy-MM-dd");
+		//yyyy-MM-dd
 		getContentPane().add(JTextField_EM);
 		JTextField_EM.setBounds(84,228,156,20);
 		JButton_OK.setText("OK");
