@@ -1,8 +1,5 @@
 package edu.miu.finalProject.domain;
 
-import edu.miu.finalProject.Account;
-import edu.miu.finalProject.dao.AccountEntry;
-
 public class CreditCard extends Account {
 //    private double balance;
 

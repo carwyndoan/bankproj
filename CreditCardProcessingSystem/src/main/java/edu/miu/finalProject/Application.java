@@ -1,6 +1,7 @@
 package edu.miu.finalProject;
 
 import edu.miu.finalProject.dao.AccountEntry;
+import edu.miu.finalProject.domain.Account;
 import edu.miu.finalProject.domain.Customer;
 import edu.miu.finalProject.service.CreditCardService;
 import edu.miu.finalProject.service.impl.CreditCardServiceImpl;
@@ -10,18 +11,19 @@ public class Application {
         CreditCardService accountService = new CreditCardServiceImpl();
 
         // create 2 accounts;
-        accountService.createCreditCard("4253891", "Frank Brown", "gold");
-        accountService.createCreditCard("4253892", "John Doe", "silver");
-        accountService.createCreditCard("4253893", "John Doe", "bronze");
+        accountService.createCreditCard("4253891", "Frank Brown", "gold", "binireyes@gmail.com");
+        accountService.createCreditCard("4253892", "John Doe", "silver", "bereketasmel@gmail.com");
+        accountService.createCreditCard("4253893", "John Doe", "bronze","barefaine@miu.edu");
+
 
         // use account 1;
         accountService.deposit("4253891", 100);
         accountService.deposit("4253892", 100);
         accountService.deposit("4253893", 100);
 
-//        accountService.chargeAccount("4253892", 250);
+        accountService.chargeAccount("4253892", 250);
         //use account 2;
-//        accountService.deposit("4253893", 12450);
+        accountService.deposit("4253893", 12450);
         accountService.transferFunds("4253892", "4253891", 100, "payment of invoice 10232");
         // show balances
         accountService.addInterest();

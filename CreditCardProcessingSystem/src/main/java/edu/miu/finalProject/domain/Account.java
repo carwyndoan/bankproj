@@ -1,7 +1,6 @@
-package edu.miu.finalProject;
+package edu.miu.finalProject.domain;
 
 import edu.miu.finalProject.dao.AccountEntry;
-import edu.miu.finalProject.domain.Customer;
 import edu.miu.finalProject.observer.Subject;
 import edu.miu.finalProject.strategyInterface.StrategyInterface;
 
@@ -12,7 +11,6 @@ import java.util.List;
 public class Account extends Subject {
 
     private Customer customer;
-
     private String accountNumber;
     private String accountType;
 
