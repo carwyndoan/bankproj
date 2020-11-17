@@ -18,7 +18,9 @@ public class EmailSender implements Observer {
             if (entry.getDescription().equals("deposit"))
                 System.out.println("The deposit amount is greater than $500");
             else if (entry.getDescription().equals("withdraw"))
-                System.out.println("The amount is greater than your balance. The withdraw must be less than your amout");
+                System.out.println("The amount is greater than your balance. The withdraw must be less than your amount");
+            else if (entry.getDescription().equals("interest"))
+                System.out.println("The new interest is "+ entry.getAmount());
         }
     }
 }

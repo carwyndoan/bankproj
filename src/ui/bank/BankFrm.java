@@ -277,8 +277,9 @@ public class BankFrm extends JFrame {
             String samount = (String) model.getValueAt(selection, 5);
             long currentamount = Long.parseLong(samount);
             long newamount = currentamount - deposit;
-            model.setValueAt(String.valueOf(newamount), selection, 5);
-            if (newamount < 0) {
+            if (newamount > 0)
+                model.setValueAt(String.valueOf(newamount), selection, 5);
+            else {
                 JOptionPane.showMessageDialog(JButton_Withdraw, " Account " + accnr + " : balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
             }
         }
