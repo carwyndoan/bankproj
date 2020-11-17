@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 public class SendEmailClass {
     public static void sendMailTo(String receipt) throws Exception{
-        System.out.println("preparing to send");
+        System.out.println("preparing to send.....");
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
@@ -17,7 +17,7 @@ public class SendEmailClass {
         properties.put("mail.smtp.port", "587");
 
         final String myAccountEmail = "bereketasmel@gmail.com";
-        final String password = "*********";
+        final String password = "***********";
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -36,8 +36,8 @@ public class SendEmailClass {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(reciept));
-            message.setSubject("My first email");
-            message.setText("Bro chill");
+            message.setSubject("Account Changes.");
+            message.setText("Your account has been modified. Please login into the system and check recent activities.");
             return message;
         } catch (Exception e) {
             Logger.getLogger(SendEmailClass.class.getName()).log(Level.SEVERE, null, e);
