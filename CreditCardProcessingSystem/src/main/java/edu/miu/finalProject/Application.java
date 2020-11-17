@@ -11,7 +11,7 @@ public class Application {
         CreditCardService accountService = new CreditCardServiceImpl();
 
         // create 2 accounts;
-        accountService.createCreditCard("4253891", "Frank Brown", "gold", "binireyes@gmail.com");
+        accountService.createCreditCard("4253891", "Frank Brown", "gold", "samueltesfai41@gmail.com");
         accountService.createCreditCard("4253892", "John Doe", "silver", "bereketasmel@gmail.com");
         accountService.createCreditCard("4253893", "John Doe", "bronze","barefaine@miu.edu");
 
