@@ -152,11 +152,11 @@ public class JDialog_AddCompAcc extends JDialog {
             parentframe.accountType = "S";
         parentframe.newaccount = true;
         // create account service
-        AccountService service =  new AccountServiceImpl();
+        AccountService service = new AccountServiceImpl();
 
-        Account account = service.createAccount(parentframe.accountnr, parentframe.clientName, parentframe.street,
-                parentframe.city, parentframe.state, parentframe.zip, JTextField_EM.getText());
-        account.getCustomer().setNumofemployees(Integer.parseInt(JTextField_NoOfEmp.getText()));
+        Account account = service.createAccount(parentframe.accountnr.trim(), parentframe.clientName.trim(), parentframe.street.trim(),
+                parentframe.city.trim(), parentframe.state.trim(), parentframe.zip.trim(), JTextField_EM.getText().trim());
+        account.getCustomer().setNumofemployees(Integer.parseInt(JTextField_NoOfEmp.getText().trim()));
 
         if (JRadioButton_Chk.isSelected())
             account.setInterestCalculation(new CompanyChekingInterestCalculation());

@@ -281,13 +281,11 @@ public class BankFrm extends JFrame {
                 JOptionPane.showMessageDialog(JButton_Withdraw, " Account " + accnr + " : balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
             }
         }
-
-
     }
 
     void JButtonAddinterest_actionPerformed(ActionEvent event) {
         JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts", "Add interest to all accounts", JOptionPane.WARNING_MESSAGE);
-	    AccountService service =  new AccountServiceImpl();
-	    service.calculateInterest();
+        AccountService service = new AccountServiceImpl();
+        service.calculateInterest();
     }
 }
