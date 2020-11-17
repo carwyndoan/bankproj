@@ -7,6 +7,7 @@ import framework.bank.PersonalSavingInterestCalculation;
 import framework.common.Account;
 import framework.common.AccountService;
 import framework.common.AccountServiceImpl;
+import framework.common.AccountType;
 
 import java.awt.*;
 import javax.swing.*;
@@ -158,10 +159,14 @@ public class JDialog_AddCompAcc extends JDialog {
                 parentframe.city.trim(), parentframe.state.trim(), parentframe.zip.trim(), JTextField_EM.getText().trim());
         account.getCustomer().setNumofemployees(Integer.parseInt(JTextField_NoOfEmp.getText().trim()));
 
-        if (JRadioButton_Chk.isSelected())
+        if (JRadioButton_Chk.isSelected()) {
             account.setInterestCalculation(new CompanyChekingInterestCalculation());
-        else
+            account.setAccountType(AccountType.CHECKING);
+        }
+        else {
             account.setInterestCalculation(new CompanySavingInterestCalculation());
+            account.setAccountType(AccountType.SAVING);
+        }
 
         dispose();
 
