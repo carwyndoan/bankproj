@@ -14,9 +14,4 @@ public class CreditCardBronze extends CreditCard {
     void minimumPayment() {
         //TODO
     }
-
-    @Override
-    public void calculateInterest() {
-
-    }
 }
