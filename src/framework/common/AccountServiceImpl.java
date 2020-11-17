@@ -2,6 +2,12 @@ package framework.common;
 
 //import framework.bank.ChekingInterestCalculation;
 //import framework.bank.SavingInterestCalculation;
+import framework.bank.PersonalChekingInterestCalculation;
+import framework.bank.PersonalSavingInterestCalculation;
+import framework.creditcard.BronzeCreditCard;
+import framework.creditcard.GoldCreditCard;
+import framework.creditcard.SilverCreditCard;
+
 import java.util.Collection;
 
 public class AccountServiceImpl implements AccountService {
@@ -10,6 +16,52 @@ public class AccountServiceImpl implements AccountService {
 	
 	public AccountServiceImpl(){
 		accountDAO = AccountDAOFactory.getInstance();
+		generateSample(accountDAO);
+	}
+
+	private void generateSample(AccountDAO accountDAO){
+		if(getAllAccounts().size() <= 0) {
+			Account account = createAccount("1-111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account.setAccountType(AccountType.CHECKING);
+			account.setInterestCalculation(new PersonalChekingInterestCalculation());
+			Customer customer = account.getCustomer();
+
+			account = createAccount("9-1111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account.setAccountType(AccountType.GOLD);
+			account.setCcinterestCalculation(new GoldCreditCard());
+			account.setCustomer(customer);
+
+			account = createAccount("8-1111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account.setAccountType(AccountType.SILVER);
+			account.setCcinterestCalculation(new SilverCreditCard());
+			account.setCustomer(customer);
+
+			account = createAccount("7-1111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account.setAccountType(AccountType.BRONZE);
+			account.setCcinterestCalculation(new BronzeCreditCard());
+			account.setCustomer(customer);
+
+			///
+			account = createAccount("2-111", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account.setAccountType(AccountType.SAVING);
+			account.setInterestCalculation(new PersonalSavingInterestCalculation());
+			customer = account.getCustomer();
+
+			account = createAccount("9-1112", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account.setAccountType(AccountType.GOLD);
+			account.setCcinterestCalculation(new GoldCreditCard());
+			account.setCustomer(customer);
+
+			account = createAccount("8-1112", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account.setAccountType(AccountType.SILVER);
+			account.setCcinterestCalculation(new SilverCreditCard());
+			account.setCustomer(customer);
+
+			account = createAccount("7-1112", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account.setAccountType(AccountType.BRONZE);
+			account.setCcinterestCalculation(new BronzeCreditCard());
+			account.setCustomer(customer);
+		}
 	}
 
 	@Override
