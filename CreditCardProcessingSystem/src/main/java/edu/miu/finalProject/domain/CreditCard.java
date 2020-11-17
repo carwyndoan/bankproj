@@ -1,7 +1,6 @@
 package edu.miu.finalProject.domain;
 
 public class CreditCard extends Account {
-//    private double balance;
 
     public CreditCard(String accountNumber, String accountType) {
         super(accountNumber,accountType);
