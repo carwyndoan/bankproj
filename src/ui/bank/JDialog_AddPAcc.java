@@ -196,10 +196,10 @@ public class JDialog_AddPAcc extends JDialog
 //		createAccount(AccountType accountType, String accountNumber, String customerName,
 //				String street, String city, String state, String zip, LocalDate birthday, String email);
 		if (JRadioButton_Chk.isSelected())
-			service.createPersonalAccount(AccountType.CHECKING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
+			service.createAccount(AccountType.CHECKING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
 					JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText(), LocalDate.parse(JTextField_BD.getText()) ,JTextField_EM.getText());
        	else
-			service.createPersonalAccount(AccountType.SAVING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
+			service.createAccount(AccountType.SAVING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
 					JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText(), LocalDate.parse(JTextField_BD.getText()) ,JTextField_EM.getText());
 		dispose();
 	}

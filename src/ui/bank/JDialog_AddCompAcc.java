@@ -155,10 +155,10 @@ public class JDialog_AddCompAcc extends JDialog {
 
         if (JRadioButton_Chk.isSelected())
 
-            service.createCompanyAccount(AccountType.CHECKING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
+            service.createAccount(AccountType.CHECKING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
                     JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText(), 0, JTextField_EM.getText());
         else
-            service.createCompanyAccount(AccountType.SAVING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
+            service.createAccount(AccountType.SAVING, JTextField_ACNR.getText(), JTextField_NAME.getText(), JTextField_STR.getText(),
                     JTextField_CT.getText(), JTextField_ST.getText(), JTextField_ZIP.getText(), 0, JTextField_EM.getText());
 
         dispose();
