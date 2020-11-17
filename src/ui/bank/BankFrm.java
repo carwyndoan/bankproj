@@ -2,10 +2,12 @@ package ui.bank;
 
 import ui.framework.common.AccountService;
 import ui.framework.common.AccountServiceImpl;
+import ui.framework.common.AccountType;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.time.LocalDate;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 
@@ -93,7 +95,6 @@ public class BankFrm extends JFrame {
         JButton_Deposit.addActionListener(lSymAction);
         JButton_Withdraw.addActionListener(lSymAction);
         JButton_Addinterest.addActionListener(lSymAction);
-
     }
 
 
@@ -287,7 +288,7 @@ public class BankFrm extends JFrame {
 
     void JButtonAddinterest_actionPerformed(ActionEvent event) {
         JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts", "Add interest to all accounts", JOptionPane.WARNING_MESSAGE);
-	    AccountService service =  new AccountServiceImpl();
+	    AccountService service =  AccountServiceImpl.getInstance();
 	    service.getAllAccounts().forEach(account -> account.calculateInterest());
     }
 }

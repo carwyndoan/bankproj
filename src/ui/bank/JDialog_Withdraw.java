@@ -88,7 +88,7 @@ public class JDialog_Withdraw extends JDialog
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
 	{
         parentframe.amountDeposit=JTextField_AMT.getText();
-		AccountService service = new AccountServiceImpl();
+		AccountService service =  AccountServiceImpl.getInstance();
 		service.withdraw(JTextField_NAME.getText(), Integer.parseInt(JTextField_AMT.getText()));
 		dispose();
 	}
