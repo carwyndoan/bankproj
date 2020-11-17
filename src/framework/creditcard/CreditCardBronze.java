@@ -1,7 +1,7 @@
-package ui.framework.creditcard;
+package framework.creditcard;
 
-public class CreditCardSilver extends CreditCard {
-    public CreditCardSilver(String accountNumber) {
+public class CreditCardBronze extends CreditCard {
+    public CreditCardBronze(String accountNumber) {
         super(accountNumber);
     }
 

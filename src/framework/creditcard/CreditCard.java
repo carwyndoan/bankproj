@@ -1,6 +1,6 @@
-package ui.framework.creditcard;
+package framework.creditcard;
 
-import ui.framework.common.Account;
+import framework.common.Account;
 
 import java.time.LocalDate;
 

@@ -1,6 +1,6 @@
-package ui.framework.bank;
+package framework.bank;
 
-public class ChekingInterestCalculation implements InterestCalculation {
+public class PersonalChekingInterestCalculation implements InterestCalculation {
     private final double INTEREST = 0.25;
 
     @Override
