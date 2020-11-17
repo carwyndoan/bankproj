@@ -192,7 +192,7 @@ public class JDialog_AddPAcc extends JDialog
            parentframe.accountType="S";
 	   parentframe.newaccount=true;
 	   // create account service
-		AccountService service = new AccountServiceImpl();
+		AccountService service =  AccountServiceImpl.getInstance();
 //		createAccount(AccountType accountType, String accountNumber, String customerName,
 //				String street, String city, String state, String zip, LocalDate birthday, String email);
 		if (JRadioButton_Chk.isSelected())

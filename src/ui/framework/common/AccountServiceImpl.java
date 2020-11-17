@@ -8,10 +8,23 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 public class AccountServiceImpl implements AccountService {
-	private AccountDAO accountDAO;
+	private volatile static AccountServiceImpl uniqueInstance;
+
+	private static AccountDAO accountDAO;
 	
-	public AccountServiceImpl(){
+	private AccountServiceImpl(){
 		accountDAO = new AccountDAOImpl();
+	}
+
+	public static AccountServiceImpl getInstance() {
+		if (uniqueInstance == null) {
+			synchronized (AccountServiceImpl.class) {
+				if (uniqueInstance == null) {
+					uniqueInstance = new AccountServiceImpl();
+				}
+			}
+		}
+		return uniqueInstance;
 	}
 
 	/*

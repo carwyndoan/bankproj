@@ -57,6 +57,7 @@ public class Account extends Observable {
 		AccountEntry entry = new AccountEntry(amount, "interest", "", "");
 		entryList.add(entry);
 		//TODO: check amount and call measureChanges
+		measureChanges(entry);
 	}
 
 	public void transferFunds(Account toAccount, double amount, String description) {
