@@ -1,4 +1,7 @@
 package ui.ccard;
+import framework.common.AccountService;
+import framework.common.AccountServiceImpl;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -50,7 +53,6 @@ public class JDialog_Withdraw extends JDialog
 		JButton_Calcel.setBounds(156,84,84,24);
 
 	    JTextField_NAME.setText(name);
-	
 
 		SymAction lSymAction = new SymAction();
 		JButton_OK.addActionListener(lSymAction);
@@ -58,17 +60,12 @@ public class JDialog_Withdraw extends JDialog
 
 	}
 
-
-
-
 	JLabel JLabel1 = new JLabel();
 	JLabel JLabel2 = new JLabel();
 	JTextField JTextField_NAME = new JTextField();
 	JTextField JTextField_AMT = new JTextField();
 	JButton JButton_OK = new JButton();
 	JButton JButton_Calcel = new JButton();
-
-
 
 	class SymAction implements java.awt.event.ActionListener
 	{
@@ -85,6 +82,8 @@ public class JDialog_Withdraw extends JDialog
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
 	{
         parentframe.amountDeposit=JTextField_AMT.getText();
+		AccountService service = new AccountServiceImpl();
+		service.withdraw(JTextField_NAME.getText().trim(), Double.parseDouble(parentframe.amountDeposit));
 		dispose();
 	}
 

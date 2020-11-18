@@ -1,4 +1,7 @@
 package ui.ccard;
+import framework.common.AccountService;
+import framework.common.AccountServiceImpl;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -83,6 +86,8 @@ public class JDialog_Deposit extends JDialog
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
 	{
         parentframe.amountDeposit=JTextField_Deposit.getText();
+		AccountService service = new AccountServiceImpl();
+		service.deposit(JTextField_NAME.getText().trim(), Double.parseDouble(parentframe.amountDeposit));
         dispose();
 	}
 
