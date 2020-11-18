@@ -267,7 +267,7 @@ public class BankFrm extends JFrame {
             String samount = (String) model.getValueAt(selection, 5);
             double currentamount = Double.parseDouble(samount);
             double newamount = currentamount + deposit;
-            model.setValueAt(String.valueOf(newamount), selection, 5);
+            model.setValueAt(String.format("%.2f", newamount), selection, 5);
         }
     }
 
@@ -288,7 +288,8 @@ public class BankFrm extends JFrame {
             double currentamount = Double.parseDouble(samount);
             double newamount = currentamount - deposit;
             if (newamount > 0)
-                model.setValueAt(String.valueOf(newamount), selection, 5);
+                model.setValueAt(String.format("%.2f", newamount), selection, 5);
+//                model.setValueAt(String.valueOf(newamount), selection, 5);
             else {
                 JOptionPane.showMessageDialog(JButton_Withdraw, " Account " + accnr + " : balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
             }
@@ -324,7 +325,8 @@ public class BankFrm extends JFrame {
             rowdata[2] = account.getCustomer().getCity();
             rowdata[3] = account.getCustomer().getBirthday() == null ? "C" : "P";
             rowdata[4] = account.getAccountType().equals(AccountType.SAVING) ? "S" : "Ch";
-            rowdata[5] = account.getBalance() + "";
+            rowdata[5] = String.format("%.2f", account.getBalance());;
+//            String.format("%.2f", account.getBalance());
             model.addRow(rowdata);
         });
     }
