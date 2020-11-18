@@ -180,7 +180,6 @@ public class BankFrm extends JFrame {
                 JButtonWithdraw_actionPerformed(event);
             else if (object == JButton_Addinterest)
                 JButtonAddinterest_actionPerformed(event);
-
         }
     }
 
@@ -213,8 +212,6 @@ public class BankFrm extends JFrame {
             JTable1.getSelectionModel().setAnchorSelectionIndex(-1);
             newaccount = false;
         }
-
-
     }
 
     void JButtonCompAC_actionPerformed(ActionEvent event) {
