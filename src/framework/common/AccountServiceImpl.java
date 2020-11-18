@@ -9,6 +9,7 @@ import framework.creditcard.GoldCreditCard;
 import framework.creditcard.SilverCreditCard;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class AccountServiceImpl implements AccountService {
 
@@ -109,6 +110,15 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public void calculateInterest() {
-		getAllAccounts().forEach(Account::calculateInterest);
+		getAllAccounts().stream().
+				filter(account -> account.getInterestCalculation() != null)
+				.collect(Collectors.toList()).forEach(Account::calculateInterest);
+	}
+
+	@Override
+	public void calculateCCInterest() {
+		getAllAccounts().stream().
+				filter(account -> account.getCcinterestCalculation() != null)
+				.collect(Collectors.toList()).forEach(Account::calculateInterest);
 	}
 }
