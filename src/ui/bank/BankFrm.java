@@ -1,11 +1,15 @@
 package ui.bank;
 
+import framework.common.Account;
 import framework.common.AccountService;
 import framework.common.AccountServiceImpl;
+import framework.common.AccountType;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.util.Collection;
+import java.util.stream.Collectors;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
 
@@ -93,6 +97,8 @@ public class BankFrm extends JFrame {
         JButton_Deposit.addActionListener(lSymAction);
         JButton_Withdraw.addActionListener(lSymAction);
         JButton_Addinterest.addActionListener(lSymAction);
+
+        reloadData();//added for testing
     }
 
 
@@ -249,14 +255,12 @@ public class BankFrm extends JFrame {
             dep.show();
 
             // compute new amount
-            long deposit = Long.parseLong(amountDeposit);
+            double deposit = Double.parseDouble(amountDeposit);
             String samount = (String) model.getValueAt(selection, 5);
-            long currentamount = Long.parseLong(samount);
-            long newamount = currentamount + deposit;
+            double currentamount = Double.parseDouble(samount);
+            double newamount = currentamount + deposit;
             model.setValueAt(String.valueOf(newamount), selection, 5);
         }
-
-
     }
 
     void JButtonWithdraw_actionPerformed(ActionEvent event) {
@@ -271,10 +275,10 @@ public class BankFrm extends JFrame {
             wd.show();
 
             // compute new amount
-            long deposit = Long.parseLong(amountDeposit);
+            double deposit = Double.parseDouble(amountDeposit);
             String samount = (String) model.getValueAt(selection, 5);
-            long currentamount = Long.parseLong(samount);
-            long newamount = currentamount - deposit;
+            double currentamount = Double.parseDouble(samount);
+            double newamount = currentamount - deposit;
             if (newamount > 0)
                 model.setValueAt(String.valueOf(newamount), selection, 5);
             else {
@@ -287,5 +291,26 @@ public class BankFrm extends JFrame {
         JOptionPane.showMessageDialog(JButton_Addinterest, "Add interest to all accounts", "Add interest to all accounts", JOptionPane.WARNING_MESSAGE);
         AccountService service = new AccountServiceImpl();
         service.calculateInterest();
+        reloadData();
     }
+
+    void reloadData(){
+        for (int i = model.getRowCount() - 1; i >= 0; i++)
+            model.removeRow(i);
+
+        AccountService service = new AccountServiceImpl();
+        Collection<Account> col = service.getAllAccounts().stream().
+                filter(account -> ((account.getAccountType().equals(AccountType.SAVING)) || (account.getAccountType().equals(AccountType.CHECKING))))
+                        .collect(Collectors.toList());
+        col.forEach(account -> {
+            rowdata[0] = account.getAccountNumber();
+            rowdata[1] = account.getCustomer().getName();
+            rowdata[2] = account.getCustomer().getCity();
+            rowdata[3] = account.getCustomer().getBirthday() == null ? "C" : "P";
+            rowdata[4] = account.getAccountType().equals(AccountType.SAVING)? "S" : "Ch";
+            rowdata[5] = account.getBalance() + "";
+            model.addRow(rowdata);
+        });
+    }
+
 }
