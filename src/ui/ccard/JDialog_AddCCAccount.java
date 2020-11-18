@@ -6,12 +6,9 @@ import framework.common.Account;
 import framework.common.AccountService;
 import framework.common.AccountServiceImpl;
 import framework.common.AccountType;
-import framework.creditcard.CreditCard;
 import framework.creditcard.GoldCreditCard;
 import framework.creditcard.BronzeCreditCard;
 import framework.creditcard.SilverCreditCard;
-
-import java.time.LocalDate;
 
 public class JDialog_AddCCAccount extends javax.swing.JDialog {
     private CardFrm parentframe;
@@ -215,8 +212,8 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog {
 			creditCard.setAccountType(AccountType.BRONZE);
 			creditCard.setCcinterestCalculation(new BronzeCreditCard());
 		}
-        CreditCard cc = (CreditCard)creditCard;
-        cc.setExpiryDate(LocalDate.parse(parentframe.expdate.trim()));
+
+        dispose();
 	}
 
 	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event)

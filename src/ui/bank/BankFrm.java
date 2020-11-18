@@ -263,11 +263,13 @@ public class BankFrm extends JFrame {
             dep.show();
 
             // compute new amount
-            double deposit = Double.parseDouble(amountDeposit);
-            String samount = (String) model.getValueAt(selection, 5);
-            double currentamount = Double.parseDouble(samount);
-            double newamount = currentamount + deposit;
-            model.setValueAt(String.format("%.2f", newamount), selection, 5);
+            if (amountDeposit != null) {
+                double deposit = Double.parseDouble(amountDeposit);
+                String samount = (String) model.getValueAt(selection, 5);
+                double currentamount = Double.parseDouble(samount);
+                double newamount = currentamount + deposit;
+                model.setValueAt(String.format("%.2f", newamount), selection, 5);
+            }
         }
     }
 
@@ -283,15 +285,17 @@ public class BankFrm extends JFrame {
             wd.show();
 
             // compute new amount
-            double deposit = Double.parseDouble(amountDeposit);
-            String samount = (String) model.getValueAt(selection, 5);
-            double currentamount = Double.parseDouble(samount);
-            double newamount = currentamount - deposit;
-            if (newamount > 0)
-                model.setValueAt(String.format("%.2f", newamount), selection, 5);
+            if (amountDeposit != null) {
+                double deposit = Double.parseDouble(amountDeposit);
+                String samount = (String) model.getValueAt(selection, 5);
+                double currentamount = Double.parseDouble(samount);
+                double newamount = currentamount - deposit;
+                if (newamount > 0)
+                    model.setValueAt(String.format("%.2f", newamount), selection, 5);
 //                model.setValueAt(String.valueOf(newamount), selection, 5);
-            else {
-                JOptionPane.showMessageDialog(JButton_Withdraw, " Account " + accnr + " : balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
+                else {
+                    JOptionPane.showMessageDialog(JButton_Withdraw, " Account " + accnr + " : balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
+                }
             }
         }
     }
