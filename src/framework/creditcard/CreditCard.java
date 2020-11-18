@@ -47,6 +47,9 @@ public class CreditCard extends Account {
     @Override
     public String billingReport() {
         //TODO: return record of accumulate billing of account
+        double previousBalance;
+        double totalCharge;
+        double totalCredits;
         return "";
     }
 }
