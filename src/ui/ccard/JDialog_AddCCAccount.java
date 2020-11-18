@@ -212,6 +212,8 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog {
 			creditCard.setAccountType(AccountType.BRONZE);
 			creditCard.setCcinterestCalculation(new BronzeCreditCard());
 		}
+
+        dispose();
 	}
 
 	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event)

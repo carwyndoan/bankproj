@@ -230,11 +230,13 @@ public class CardFrm extends javax.swing.JFrame {
             dep.show();
 
             // compute new amount
-            double deposit = Double.parseDouble(amountDeposit);
-            String samount = (String) model.getValueAt(selection, 4);
-            double currentamount = Double.parseDouble(samount);
-            double newamount = currentamount + deposit;
-            model.setValueAt(String.format("%.2f", newamount), selection, 4);
+            if (amountDeposit != null) {
+                double deposit = Double.parseDouble(amountDeposit);
+                String samount = (String) model.getValueAt(selection, 4);
+                double currentamount = Double.parseDouble(samount);
+                double newamount = currentamount + deposit;
+                model.setValueAt(String.format("%.2f", newamount), selection, 4);
+            }
         }
 
 
@@ -252,13 +254,15 @@ public class CardFrm extends javax.swing.JFrame {
             wd.show();
 
             // compute new amount
-            double deposit = Double.parseDouble(amountDeposit);
-            String samount = (String) model.getValueAt(selection, 4);
-            double currentamount = Double.parseDouble(samount);
-            double newamount = currentamount - deposit;
-            model.setValueAt(String.format("%.2f", newamount), selection, 4);
-            if (newamount < 0) {
-                JOptionPane.showMessageDialog(JButton_Withdraw, " " + name + " Your balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
+            if (amountDeposit != null) {
+                double deposit = Double.parseDouble(amountDeposit);
+                String samount = (String) model.getValueAt(selection, 4);
+                double currentamount = Double.parseDouble(samount);
+                double newamount = currentamount - deposit;
+                model.setValueAt(String.format("%.2f", newamount), selection, 4);
+                if (newamount < 0) {
+                    JOptionPane.showMessageDialog(JButton_Withdraw, " " + name + " Your balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
+                }
             }
         }
     }
