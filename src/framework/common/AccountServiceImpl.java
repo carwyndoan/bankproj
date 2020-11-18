@@ -69,7 +69,12 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Account createAccount(String accountNumber, String customerName, String street, String city, String state, String zip, String email) {
 		Account account = new Account(accountNumber);
-		Customer customer = new Customer(customerName, street, city, state, zip, email);
+		Customer customer = accountDAO.loadCustomer(customerName + zip);
+		if(customer == null)
+		{
+			customer = new Customer(customerName, street, city, state, zip, email);
+			accountDAO.saveCustomer(customer);
+		}
 		account.setCustomer(customer);
 		accountDAO.saveAccount(account);
 		createObservers(account);
@@ -78,11 +83,19 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account createCreditCard(String accountNumber, String customerName, String street, String city, String state, String zip, String email) {
-		Account account = new CreditCard(accountNumber);
-		Customer customer = new Customer(customerName, street, city, state, zip, email);
-		account.setCustomer(customer);
-		accountDAO.saveAccount(account);
-		createObservers(account);
+		Customer customer = accountDAO.loadCustomer(customerName + zip);
+		if(customer == null)
+		{
+			customer = new Customer(customerName, street, city, state, zip, email);
+			accountDAO.saveCustomer(customer);
+		}
+		Account account = customer.getAccount(accountNumber);
+		if(account == null) {
+			account = new CreditCard(accountNumber);
+			account.setCustomer(customer);
+			accountDAO.saveAccount(account);
+			createObservers(account);
+		}
 		return account;
 	}
 
