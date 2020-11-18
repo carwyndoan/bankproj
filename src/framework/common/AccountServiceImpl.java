@@ -7,6 +7,7 @@ import framework.creditcard.CreditCard;
 import framework.creditcard.GoldCreditCard;
 import framework.creditcard.SilverCreditCard;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,16 +34,19 @@ public class AccountServiceImpl implements AccountService {
 			account.setAccountType(AccountType.GOLD);
 			account.setCcinterestCalculation(new GoldCreditCard());
 			account.setCustomer(customer);
+			((CreditCard)account).setExpiryDate(LocalDate.of(2020,10,1));
 
 			account = createCreditCard("8-1111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
 			account.setAccountType(AccountType.SILVER);
 			account.setCcinterestCalculation(new SilverCreditCard());
 			account.setCustomer(customer);
+			((CreditCard)account).setExpiryDate(LocalDate.of(2020,9,1));
 
 			account = createCreditCard("7-1111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
 			account.setAccountType(AccountType.BRONZE);
 			account.setCcinterestCalculation(new BronzeCreditCard());
 			account.setCustomer(customer);
+			((CreditCard)account).setExpiryDate(LocalDate.of(2020,8,1));
 
 			///
 			account = createAccount("2-111", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
@@ -55,16 +59,19 @@ public class AccountServiceImpl implements AccountService {
 			account.setAccountType(AccountType.GOLD);
 			account.setCcinterestCalculation(new GoldCreditCard());
 			account.setCustomer(customer);
+			((CreditCard)account).setExpiryDate(LocalDate.of(2020,5,1));
 
 			account = createCreditCard("8-1112", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
 			account.setAccountType(AccountType.SILVER);
 			account.setCcinterestCalculation(new SilverCreditCard());
 			account.setCustomer(customer);
+			((CreditCard)account).setExpiryDate(LocalDate.of(2020,4,1));
 
 			account = createCreditCard("7-1112", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
 			account.setAccountType(AccountType.BRONZE);
 			account.setCcinterestCalculation(new BronzeCreditCard());
 			account.setCustomer(customer);
+			((CreditCard)account).setExpiryDate(LocalDate.of(2020,3,1));
 		}
 	}
 
