@@ -3,6 +3,10 @@ package ui.ccard;
 		A basic implementation of the JDialog class.
 */
 
+import framework.common.Account;
+import framework.common.AccountService;
+import framework.common.AccountServiceImpl;
+
 public class JDialog_AddCCAccount extends javax.swing.JDialog
 {
     private CardFrm parentframe;
@@ -201,6 +205,12 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog
            }
            
 	   parentframe.newaccount=true;
+	// create account service
+//       AccountService service = new AccountServiceImpl();
+//
+//       Account account = service.createAccount(parentframe.clientName.trim(), parentframe.street.trim(),
+//               parentframe.city.trim(), parentframe.state.trim(), parentframe.zip.trim());
+//       account.getCustomer().setNumofemployees(Integer.parseInt(JTextField_NoOfEmp.getText().trim()));
        dispose();
 	}
 
