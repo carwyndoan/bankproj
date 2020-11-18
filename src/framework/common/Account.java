@@ -3,10 +3,9 @@ package framework.common;
 import framework.bank.InterestCalculation;
 import framework.creditcard.CreditCardStrategyInterface;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Observable;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
 public class Account extends Observable {
 	private Customer customer;
@@ -44,14 +43,12 @@ public class Account extends Observable {
 	public void deposit(double amount) {
 		AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
 		entryList.add(entry);
-		//TODO: check amount and call measureChanges
 		if (amount > 500)
 			this.measureChanges(entry);
 	}
 
 	public void withdraw(double amount) {
 		AccountEntry entry = new AccountEntry(-amount, "withdraw", "", "");
-		//TODO: check amount and call measureChanges
 		if (this.getBalance() < amount)
 			this.measureChanges(entry);
 		else
@@ -122,15 +119,59 @@ public class Account extends Observable {
 		return interestCalculation;
 	}
 
+	public double getTotalCredits() {
+		return this.getEntryList().stream()
+				.filter(entry -> entry.getDescription().equals("deposit"))
+				.mapToDouble(AccountEntry::getAmount).sum();
+	}
+
+	public double getTotalDebits() {
+		return this.getEntryList().stream()
+				.filter(entry -> entry.getDescription().equals("withdraw"))
+				.mapToDouble(AccountEntry::getAmount).sum();
+	}
+
+	private double getTotalInterest() {
+		return this.getEntryList().stream()
+				.filter(entry -> entry.getDescription().equals("interest"))
+				.mapToDouble(AccountEntry::getAmount).sum();
+	}
+
+	public double getPreviousBalance() {
+		LocalDate firstDay = LocalDate.now();
+		firstDay = firstDay.minusDays(firstDay.getDayOfMonth() - 1);
+		Date firstDate = Date.from(firstDay.atStartOfDay()
+				.atZone(ZoneId.systemDefault())
+				.toInstant());
+
+		return this.getEntryList().stream()
+				.filter(entry -> entry.getDate().before(firstDate))
+				.mapToDouble(AccountEntry::getAmount).sum();
+	}
+
 	public void calculateInterest(){
-		//TODO: get interest, calculate amount, call interest
 		double interest = interestCalculation.getInterest();
 		double totalInterest = this.getBalance() * interest;
 		this.interest(totalInterest);
 	}
 
 	public String billingReport() {
-		//TODO: return record of accumulate billing of account
-		return "";
+		StringBuilder report =new StringBuilder();
+		report.append("Name= " + getCustomer().getName());
+		report.append("\n Address=" + getCustomer().getStreet());
+		report.append( ", "+ getCustomer().getCity() );
+		report.append(", "+ getCustomer().getState() );
+		report.append( ", " + getCustomer().getZip() );
+		report.append( "\r\n Account number=" + getAccountNumber()) ;
+		report.append("\r\n Account type=" + getAccountType());
+		report.append( "\r\nPrevious balance : $" + getPreviousBalance());
+		report.append( "\n Total debit : $ " + getTotalDebits());
+		report.append( "\n Total credit : $ " + getTotalCredits());
+		report.append( "\n Total interest : $ " + getTotalInterest());
+		report.append( "\n New Balance  : $ " + getBalance());
+		report.append( "\r\n");
+		report.append( "\r\n");
+		System.out.println(report);
+		return report.toString();
 	}
 }
