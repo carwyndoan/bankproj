@@ -234,7 +234,7 @@ public class CardFrm extends javax.swing.JFrame {
             String samount = (String) model.getValueAt(selection, 4);
             double currentamount = Double.parseDouble(samount);
             double newamount = currentamount + deposit;
-            model.setValueAt(String.valueOf(newamount), selection, 4);
+            model.setValueAt(String.format("%.2f", newamount), selection, 4);
         }
 
 
@@ -256,7 +256,7 @@ public class CardFrm extends javax.swing.JFrame {
             String samount = (String) model.getValueAt(selection, 4);
             double currentamount = Double.parseDouble(samount);
             double newamount = currentamount - deposit;
-            model.setValueAt(String.valueOf(newamount), selection, 4);
+            model.setValueAt(String.format("%.2f", newamount), selection, 4);
             if (newamount < 0) {
                 JOptionPane.showMessageDialog(JButton_Withdraw, " " + name + " Your balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
             }
@@ -279,7 +279,8 @@ public class CardFrm extends javax.swing.JFrame {
             rowdata[1] = creditCard.getAccountNumber();
             rowdata[2] = creditCard.getExpiryDate();
             rowdata[3] = account.getAccountType().equals(AccountType.GOLD) ? "G" : (account.getAccountType().equals(AccountType.BRONZE) ? "B" : "S");
-            rowdata[4] = account.getBalance() + "";
+            rowdata[4] = String.format("%.2f", account.getBalance());
+
             model.addRow(rowdata);
 
 
