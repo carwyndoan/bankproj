@@ -53,7 +53,6 @@ public class JDialog_Withdraw extends JDialog
 		JButton_Calcel.setBounds(156,84,84,24);
 
 	    JTextField_NAME.setText(name);
-	
 
 		SymAction lSymAction = new SymAction();
 		JButton_OK.addActionListener(lSymAction);
@@ -61,17 +60,12 @@ public class JDialog_Withdraw extends JDialog
 
 	}
 
-
-
-
 	JLabel JLabel1 = new JLabel();
 	JLabel JLabel2 = new JLabel();
 	JTextField JTextField_NAME = new JTextField();
 	JTextField JTextField_AMT = new JTextField();
 	JButton JButton_OK = new JButton();
 	JButton JButton_Calcel = new JButton();
-
-
 
 	class SymAction implements java.awt.event.ActionListener
 	{
@@ -87,9 +81,15 @@ public class JDialog_Withdraw extends JDialog
 
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
 	{
+<<<<<<< HEAD
 		parentframe.amountDeposit = JTextField_AMT.getText().trim();
 		AccountService service = new AccountServiceImpl();
 		service.withdraw(parentframe.ccnumber.trim(), Double.parseDouble(parentframe.amountDeposit));
+=======
+        parentframe.amountDeposit=JTextField_AMT.getText();
+		AccountService service = new AccountServiceImpl();
+		service.withdraw(JTextField_NAME.getText().trim(), Double.parseDouble(parentframe.amountDeposit));
+>>>>>>> 26a4d1366917097f06ddeb65bef6a5a5100d0360
 		dispose();
 	}
 
