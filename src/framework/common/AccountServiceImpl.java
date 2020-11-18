@@ -1,10 +1,9 @@
 package framework.common;
 
-//import framework.bank.ChekingInterestCalculation;
-//import framework.bank.SavingInterestCalculation;
 import framework.bank.PersonalChekingInterestCalculation;
 import framework.bank.PersonalSavingInterestCalculation;
 import framework.creditcard.BronzeCreditCard;
+import framework.creditcard.CreditCard;
 import framework.creditcard.GoldCreditCard;
 import framework.creditcard.SilverCreditCard;
 
@@ -26,17 +25,17 @@ public class AccountServiceImpl implements AccountService {
 			account.setInterestCalculation(new PersonalChekingInterestCalculation());
 			Customer customer = account.getCustomer();
 
-			account = createAccount("9-1111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account = createCreditCard("9-1111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
 			account.setAccountType(AccountType.GOLD);
 			account.setCcinterestCalculation(new GoldCreditCard());
 			account.setCustomer(customer);
 
-			account = createAccount("8-1111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account = createCreditCard("8-1111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
 			account.setAccountType(AccountType.SILVER);
 			account.setCcinterestCalculation(new SilverCreditCard());
 			account.setCustomer(customer);
 
-			account = createAccount("7-1111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account = createCreditCard("7-1111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
 			account.setAccountType(AccountType.BRONZE);
 			account.setCcinterestCalculation(new BronzeCreditCard());
 			account.setCustomer(customer);
@@ -47,17 +46,17 @@ public class AccountServiceImpl implements AccountService {
 			account.setInterestCalculation(new PersonalSavingInterestCalculation());
 			customer = account.getCustomer();
 
-			account = createAccount("9-1112", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account = createCreditCard("9-1112", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
 			account.setAccountType(AccountType.GOLD);
 			account.setCcinterestCalculation(new GoldCreditCard());
 			account.setCustomer(customer);
 
-			account = createAccount("8-1112", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account = createCreditCard("8-1112", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
 			account.setAccountType(AccountType.SILVER);
 			account.setCcinterestCalculation(new SilverCreditCard());
 			account.setCustomer(customer);
 
-			account = createAccount("7-1112", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
+			account = createCreditCard("7-1112", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
 			account.setAccountType(AccountType.BRONZE);
 			account.setCcinterestCalculation(new BronzeCreditCard());
 			account.setCustomer(customer);
@@ -67,6 +66,16 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Account createAccount(String accountNumber, String customerName, String street, String city, String state, String zip, String email) {
 		Account account = new Account(accountNumber);
+		Customer customer = new Customer(customerName, street, city, state, zip, email);
+		account.setCustomer(customer);
+		accountDAO.saveAccount(account);
+		createObservers(account);
+		return account;
+	}
+
+	@Override
+	public Account createCreditCard(String accountNumber, String customerName, String street, String city, String state, String zip, String email) {
+		Account account = new CreditCard(accountNumber);
 		Customer customer = new Customer(customerName, street, city, state, zip, email);
 		account.setCustomer(customer);
 		accountDAO.saveAccount(account);
