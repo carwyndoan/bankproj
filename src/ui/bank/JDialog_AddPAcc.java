@@ -8,6 +8,7 @@ import framework.bank.PersonalSavingInterestCalculation;
 import framework.common.Account;
 import framework.common.AccountService;
 import framework.common.AccountServiceImpl;
+import framework.common.AccountType;
 
 import java.awt.*;
 import java.time.LocalDate;
@@ -188,10 +189,13 @@ public class JDialog_AddPAcc extends JDialog {
                 parentframe.city.trim(), parentframe.state.trim(), parentframe.zip.trim(), JTextField_EM.getText().trim());
         account.getCustomer().setBirthday(LocalDate.parse(JTextField_BD.getText().trim()));
 
-        if (parentframe.accountType.equals("Ch"))
+        if (parentframe.accountType.equals("Ch")) {
             account.setInterestCalculation(new PersonalChekingInterestCalculation());
-        else
+            account.setAccountType(AccountType.CHECKING);
+        } else {
             account.setInterestCalculation(new PersonalSavingInterestCalculation());
+            account.setAccountType(AccountType.SAVING);
+        }
 
         dispose();
     }
