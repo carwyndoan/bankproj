@@ -56,7 +56,6 @@ public class BankFrm extends JFrame {
         rowdata = new Object[8];
         newaccount = false;
 
-
         JPanel1.add(JScrollPane1);
         JScrollPane1.setBounds(12, 92, 444, 160);
         JScrollPane1.getViewport().add(JTable1);
@@ -79,12 +78,20 @@ public class BankFrm extends JFrame {
         JButton_Addinterest.setText("Add interest");
         JPanel1.add(JButton_Addinterest);
         JButton_Withdraw.setBounds(468, 164, 96, 33);
+
         JButton_Exit.setText("Exit");
         JPanel1.add(JButton_Exit);
         JButton_Exit.setBounds(468, 248, 96, 31);
         // lineBorder1.setRoundedCorners(true);
         // lineBorder1.setLineColor(java.awt.Color.green);
         //$$ lineBorder1.move(24,312);
+
+        // Added for billing report
+        JButton_GenBill.setText("Monthly bills");
+        JButton_GenBill.setActionCommand("jbutton");
+        JPanel1.add(JButton_GenBill);
+        JButton_GenBill.setBounds(468, 210, 100, 33);
+        ////////////
 
         JButton_PerAC.setActionCommand("jbutton");
 
@@ -98,9 +105,10 @@ public class BankFrm extends JFrame {
         JButton_Withdraw.addActionListener(lSymAction);
         JButton_Addinterest.addActionListener(lSymAction);
 
+        JButton_GenBill.addActionListener(lSymAction);//added for Billing Report
+
         reloadData();//added for testing
     }
-
 
     /*****************************************************
      * The entry point for this application.
@@ -126,7 +134,6 @@ public class BankFrm extends JFrame {
         }
     }
 
-
     JPanel JPanel1 = new JPanel();
     JButton JButton_PerAC = new JButton();
     JButton JButton_CompAC = new JButton();
@@ -134,6 +141,8 @@ public class BankFrm extends JFrame {
     JButton JButton_Withdraw = new JButton();
     JButton JButton_Addinterest = new JButton();
     JButton JButton_Exit = new JButton();
+
+    JButton JButton_GenBill = new JButton(); // Added for Billing Report
 
     void exitApplication() {
         try {
@@ -180,6 +189,8 @@ public class BankFrm extends JFrame {
                 JButtonWithdraw_actionPerformed(event);
             else if (object == JButton_Addinterest)
                 JButtonAddinterest_actionPerformed(event);
+            else if (object == JButton_GenBill)
+                JButtonGenerateBill_actionPerformed(event);
         }
     }
 
@@ -256,7 +267,7 @@ public class BankFrm extends JFrame {
             String samount = (String) model.getValueAt(selection, 5);
             double currentamount = Double.parseDouble(samount);
             double newamount = currentamount + deposit;
-            model.setValueAt(String.valueOf(newamount), selection, 5);
+            model.setValueAt(String.format("%.2f", newamount), selection, 5);
         }
     }
 
@@ -277,7 +288,8 @@ public class BankFrm extends JFrame {
             double currentamount = Double.parseDouble(samount);
             double newamount = currentamount - deposit;
             if (newamount > 0)
-                model.setValueAt(String.valueOf(newamount), selection, 5);
+                model.setValueAt(String.format("%.2f", newamount), selection, 5);
+//                model.setValueAt(String.valueOf(newamount), selection, 5);
             else {
                 JOptionPane.showMessageDialog(JButton_Withdraw, " Account " + accnr + " : balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
             }
@@ -291,24 +303,31 @@ public class BankFrm extends JFrame {
         reloadData();
     }
 
-    void reloadData(){
+    // Added for billing report
+    void JButtonGenerateBill_actionPerformed(java.awt.event.ActionEvent event) {
+        JDialogGenBill billFrm = new JDialogGenBill();
+        billFrm.setBounds(450, 20, 400, 350);
+        billFrm.show();
+    }
+
+    void reloadData() {
         int size = model.getRowCount();
-        for (int i = size - 1; i >= 0 ; i--)
+        for (int i = size - 1; i >= 0; i--)
             model.removeRow(i);
 
         AccountService service = new AccountServiceImpl();
         Collection<Account> col = service.getAllAccounts().stream().
                 filter(account -> ((account.getAccountType().equals(AccountType.SAVING)) || (account.getAccountType().equals(AccountType.CHECKING))))
-                        .collect(Collectors.toList());
+                .collect(Collectors.toList());
         col.forEach(account -> {
             rowdata[0] = account.getAccountNumber();
             rowdata[1] = account.getCustomer().getName();
             rowdata[2] = account.getCustomer().getCity();
             rowdata[3] = account.getCustomer().getBirthday() == null ? "C" : "P";
-            rowdata[4] = account.getAccountType().equals(AccountType.SAVING)? "S" : "Ch";
-            rowdata[5] = account.getBalance() + "";
+            rowdata[4] = account.getAccountType().equals(AccountType.SAVING) ? "S" : "Ch";
+            rowdata[5] = String.format("%.2f", account.getBalance());;
+//            String.format("%.2f", account.getBalance());
             model.addRow(rowdata);
         });
     }
-
 }

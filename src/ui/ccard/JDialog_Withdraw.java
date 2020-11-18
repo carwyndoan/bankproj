@@ -83,7 +83,8 @@ public class JDialog_Withdraw extends JDialog
 	{
 		parentframe.amountDeposit = JTextField_AMT.getText().trim();
 		AccountService service = new AccountServiceImpl();
-		service.withdraw(parentframe.ccnumber.trim(), Double.parseDouble(parentframe.amountDeposit));
+//		service.withdraw(parentframe.ccnumber.trim(), Double.parseDouble(parentframe.amountDeposit));
+		service.withdraw(JTextField_NAME.getText().trim(), Double.parseDouble(parentframe.amountDeposit));
 		dispose();
 	}
 

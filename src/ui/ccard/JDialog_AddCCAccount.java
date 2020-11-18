@@ -78,6 +78,7 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog {
         JTextField_CCNR.setBounds(84, 252, 156, 20);
         getContentPane().add(JTextField_ExpDate);
         JTextField_ExpDate.setBounds(84, 276, 156, 20);
+        JTextField_ExpDate.setText("yyyy-mm-dd");
         JButton_OK.setText("OK");
         JButton_OK.setActionCommand("OK");
         getContentPane().add(JButton_OK);

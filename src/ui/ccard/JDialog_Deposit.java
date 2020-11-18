@@ -89,7 +89,8 @@ public class JDialog_Deposit extends JDialog
 	{
 		parentframe.amountDeposit=JTextField_Deposit.getText().trim();
 		AccountService service = new AccountServiceImpl();
-		service.deposit(parentframe.ccnumber,Double.parseDouble(JTextField_Deposit.getText()));
+//		service.deposit(parentframe.ccnumber,Double.parseDouble(JTextField_Deposit.getText()));
+		service.deposit(JTextField_NAME.getText().trim(), Double.parseDouble(JTextField_Deposit.getText()));
         dispose();
 	}
 
