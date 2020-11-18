@@ -118,6 +118,10 @@ public class Account extends Observable {
 		this.notifyObservers(entry);
 	}
 
+	public InterestCalculation getInterestCalculation() {
+		return interestCalculation;
+	}
+
 	public void calculateInterest(){
 		//TODO: get interest, calculate amount, call interest
 		double interest = interestCalculation.getInterest();
