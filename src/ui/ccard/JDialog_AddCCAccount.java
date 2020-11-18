@@ -3,9 +3,14 @@ package ui.ccard;
 		A basic implementation of the JDialog class.
 */
 
+import framework.bank.CompanyChekingInterestCalculation;
+import framework.bank.CompanySavingInterestCalculation;
 import framework.common.Account;
 import framework.common.AccountService;
 import framework.common.AccountServiceImpl;
+import framework.common.AccountType;
+import framework.creditcard.CreditCard;
+import framework.creditcard.GoldCreditCard;
 
 public class JDialog_AddCCAccount extends javax.swing.JDialog
 {
@@ -205,12 +210,24 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog
            }
            
 	   parentframe.newaccount=true;
-	// create account service
-//       AccountService service = new AccountServiceImpl();
-//
-//       Account account = service.createAccount(parentframe.clientName.trim(), parentframe.street.trim(),
-//               parentframe.city.trim(), parentframe.state.trim(), parentframe.zip.trim());
-//       account.getCustomer().setNumofemployees(Integer.parseInt(JTextField_NoOfEmp.getText().trim()));
+           //createAccount --- Biniam
+
+		AccountService service = new AccountServiceImpl();
+        Account account = new CreditCard(parentframe.ccnumber.trim());
+        account = service.createAccount(parentframe.ccnumber.trim(), parentframe.clientName.trim(), parentframe.street.trim(),
+				parentframe.city.trim(), parentframe.state.trim(), parentframe.zip.trim(),JTextField_Email.getText().trim());
+
+		if (JRadioButton_Gold.isSelected()) {
+			account.setAccountType(AccountType.GOLD);
+			account.setCcinterestCalculation(new GoldCreditCard());
+		}
+		else if(JRadioButton_Silver.isSelected()) {
+			account.setAccountType(AccountType.SILVER);
+			account.setCcinterestCalculation(new GoldCreditCard());
+		} else {
+			account.setAccountType(AccountType.BRONZE);
+			account.setCcinterestCalculation(new GoldCreditCard());
+		}
        dispose();
 	}
 

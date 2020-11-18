@@ -1,4 +1,11 @@
 package ui.ccard;
+import framework.bank.CompanyChekingInterestCalculation;
+import framework.bank.CompanySavingInterestCalculation;
+import framework.common.Account;
+import framework.common.AccountService;
+import framework.common.AccountServiceImpl;
+import framework.common.AccountType;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -134,11 +141,27 @@ public class JDialog_AddCompAcc extends JDialog
        parentframe.city=JTextField_CT.getText();
        parentframe.zip=JTextField_ZIP.getText();
        parentframe.state=JTextField_ST.getText();
-       if (JRadioButton_Chk.isSelected())
-           parentframe.accountType="Ch";
-           else
-           parentframe.accountType="S";
-	   parentframe.newaccount=true;
+
+//		if (JRadioButton_Chk.isSelected())
+//			parentframe.accountType = "Ch";
+//		else
+//			parentframe.accountType = "S";
+//		parentframe.newaccount = true;
+//		// create account service
+//		AccountService service = new AccountServiceImpl();
+//
+//		Account account = service.createAccount(parentframe.accountnr.trim(), parentframe.clientName.trim(), parentframe.street.trim(),
+//				parentframe.city.trim(), parentframe.state.trim(), parentframe.zip.trim(), JTextField_EM.getText().trim());
+//		account.getCustomer().setNumofemployees(Integer.parseInt(JTextField_NoOfEmp.getText().trim()));
+//
+//		if (JRadioButton_Chk.isSelected()) {
+//			account.setInterestCalculation(new CompanyChekingInterestCalculation());
+//			account.setAccountType(AccountType.CHECKING);
+//		}
+//		else {
+//			account.setInterestCalculation(new CompanySavingInterestCalculation());
+//			account.setAccountType(AccountType.SAVING);
+//		}
 	   dispose();
 			 
 	}

@@ -1,4 +1,7 @@
 package ui.ccard;
+import framework.common.AccountService;
+import framework.common.AccountServiceImpl;
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -84,7 +87,9 @@ public class JDialog_Withdraw extends JDialog
 
 	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
 	{
-        parentframe.amountDeposit=JTextField_AMT.getText();
+		parentframe.amountDeposit = JTextField_AMT.getText().trim();
+		AccountService service = new AccountServiceImpl();
+		service.withdraw(parentframe.ccnumber.trim(), Double.parseDouble(parentframe.amountDeposit));
 		dispose();
 	}
 
