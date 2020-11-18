@@ -6,9 +6,20 @@ package ui.ccard;
 import java.awt.*;
 import javax.swing.*;
 
+import framework.common.Account;
+import framework.common.AccountService;
+import framework.common.AccountServiceImpl;
+
 public class JDialogGenBill extends JDialog
 {
     String billstring;
+    
+    CardFrm parentframe = new CardFrm();
+    AccountService service = new AccountServiceImpl();
+
+    Account account = service.createAccount(parentframe.clientName.trim(), parentframe.clientName.trim(), parentframe.street.trim(),
+            parentframe.city.trim(), parentframe.state.trim(), parentframe.zip.trim(), parentframe.accountType.trim());
+    
     
 	public JDialogGenBill(Frame parent)
 	{
