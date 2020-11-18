@@ -6,6 +6,8 @@ import java.util.Collection;
 public class AccountDAOImpl implements AccountDAO {
 	Collection<Account> accountlist = new ArrayList<Account>();
 
+	Collection<Customer> customerlist = new ArrayList<Customer>();
+
 	public void saveAccount(Account account) {
 		accountlist.add(account); // add the new
 	}
@@ -29,6 +31,31 @@ public class AccountDAOImpl implements AccountDAO {
 
 	public Collection<Account> getAccounts() {
 		return accountlist;
+	}
+
+	public void saveCustomer(Customer customer) {
+		customerlist.add(customer); // add the new
+	}
+
+	public void updateCustomer(Customer customer) {
+		Customer customerexist = loadCustomer(customer.getName() + customer.getZip());
+		if (customerexist != null) {
+			customerlist.remove(customerexist); // remove the old
+			customerlist.add(customerexist); // add the new
+		}
+	}
+
+	public Customer loadCustomer(String customerzip) {
+		for (Customer customer : customerlist) {
+			if ((customer.getName() + customer.getZip()).equals(customerzip)) {
+				return customer;
+			}
+		}
+		return null;
+	}
+
+	public Collection<Customer> getCustomers() {
+		return customerlist;
 	}
 
 }

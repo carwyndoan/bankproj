@@ -1,6 +1,8 @@
 package framework.common;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 public class Customer {
 	private String name;
@@ -11,6 +13,7 @@ public class Customer {
 	private LocalDate birthday;
 	private int numofemployees;
 	private String email;
+	List<Account> accountList;
 
 	public Customer(String name, String street, String city, String state, String zip, String email) {
 		this.name = name;
@@ -83,5 +86,17 @@ public class Customer {
 
 	public void setNumofemployees(int numofemployees) {
 		this.numofemployees = numofemployees;
+	}
+
+	public List<Account> getAccountList() {
+		return accountList;
+	}
+
+	public void setAccountList(List<Account> accountList) {
+		this.accountList = accountList;
+	}
+
+	public Account getAccount(String accountNumber) {
+		return getAccountList().stream().filter(acc -> acc.getAccountNumber().equals(accountNumber)).findFirst().orElse(null);
 	}
 }
