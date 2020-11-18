@@ -295,7 +295,8 @@ public class BankFrm extends JFrame {
     }
 
     void reloadData(){
-        for (int i = model.getRowCount() - 1; i >= 0; i++)
+        int size = model.getRowCount();
+        for (int i = size - 1; i >= 0 ; i--)
             model.removeRow(i);
 
         AccountService service = new AccountServiceImpl();
