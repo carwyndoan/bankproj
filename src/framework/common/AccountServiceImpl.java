@@ -24,6 +24,7 @@ public class AccountServiceImpl implements AccountService {
 			Account account = createAccount("1-111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
 			account.setAccountType(AccountType.CHECKING);
 			account.setInterestCalculation(new PersonalChekingInterestCalculation());
+			account.deposit(79797979);
 			Customer customer = account.getCustomer();
 
 			account = createCreditCard("9-1111", "Duc Phuoc Doan", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
@@ -44,6 +45,7 @@ public class AccountServiceImpl implements AccountService {
 			///
 			account = createAccount("2-111", "Duy Thai Nguyen", "4th", "Fairfield", "IA", "52557", "ddoan@miu.edu");
 			account.setAccountType(AccountType.SAVING);
+			account.deposit(39393939);
 			account.setInterestCalculation(new PersonalSavingInterestCalculation());
 			customer = account.getCustomer();
 

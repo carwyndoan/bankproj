@@ -12,6 +12,7 @@ public class CreditCard extends Account {
 
     public CreditCard(String accountNumber) {
         super(accountNumber);
+        limit = 3500;
     }
 
     public LocalDate getExpiryDate() {
