@@ -3,11 +3,8 @@ package ui.ccard;
 import framework.common.Account;
 import framework.common.AccountService;
 import framework.common.AccountServiceImpl;
-<<<<<<< HEAD
-=======
 import framework.common.AccountType;
 import framework.creditcard.CreditCard;
->>>>>>> 26a4d1366917097f06ddeb65bef6a5a5100d0360
 
 import java.awt.BorderLayout;
 import java.util.Collection;
