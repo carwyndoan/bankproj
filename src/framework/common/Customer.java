@@ -1,6 +1,7 @@
 package framework.common;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public class Customer {
 		this.state = state;
 		this.zip = zip;
 		this.email = email;
+		accountList = new ArrayList<>();
 	}
 
 	public String getName() {

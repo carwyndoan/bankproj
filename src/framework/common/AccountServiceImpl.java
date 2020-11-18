@@ -144,7 +144,20 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public List<String> printBankStatement() {
 		List<String> bankStatement = new ArrayList<>();
-		getAllAccounts().forEach((Account acc) -> {
+		getAllAccounts()
+				.stream().filter(account -> account.getInterestCalculation() != null)
+				.forEach((Account acc) -> {
+			bankStatement.add(acc.billingReport());
+		});
+		return bankStatement;
+	}
+
+	@Override
+	public List<String> printBillingReport() {
+		List<String> bankStatement = new ArrayList<>();
+		getAllAccounts()
+				.stream().filter(account -> account.getCcinterestCalculation() != null)
+				.forEach((Account acc) -> {
 			bankStatement.add(acc.billingReport());
 		});
 		return bankStatement;

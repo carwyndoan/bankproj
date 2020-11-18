@@ -36,8 +36,12 @@ public class CreditCard extends Account {
     }
 
     @Override
-    public double getBalance() {
-        return super.getBalance() + limit;
+    public void withdraw(double amount) {
+        AccountEntry entry = new AccountEntry(-amount, "withdraw", "", "");
+        if (this.getBalance() + getLimit() < amount)
+            this.measureChanges(entry);
+        else
+            getEntryList().add(entry);
     }
 
     @Override
