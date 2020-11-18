@@ -222,7 +222,7 @@ public class CardFrm extends javax.swing.JFrame {
         // get selected name
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
         if (selection >= 0) {
-            String name = (String) model.getValueAt(selection, 0);
+            String name = (String) model.getValueAt(selection, 1);
 
             //Show the dialog for adding deposit amount for the current mane
             JDialog_Deposit dep = new JDialog_Deposit(thisframe, name);
@@ -244,7 +244,7 @@ public class CardFrm extends javax.swing.JFrame {
         // get selected name
         int selection = JTable1.getSelectionModel().getMinSelectionIndex();
         if (selection >= 0) {
-            String name = (String) model.getValueAt(selection, 0);
+            String name = (String) model.getValueAt(selection, 1);
 
             //Show the dialog for adding withdraw amount for the current mane
             JDialog_Withdraw wd = new JDialog_Withdraw(thisframe, name);
