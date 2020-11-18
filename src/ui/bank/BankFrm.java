@@ -56,7 +56,6 @@ public class BankFrm extends JFrame {
         rowdata = new Object[8];
         newaccount = false;
 
-
         JPanel1.add(JScrollPane1);
         JScrollPane1.setBounds(12, 92, 444, 160);
         JScrollPane1.getViewport().add(JTable1);
@@ -94,7 +93,6 @@ public class BankFrm extends JFrame {
         JButton_GenBill.setBounds(468, 210, 100, 33);
         ////////////
 
-
         JButton_PerAC.setActionCommand("jbutton");
 
         SymWindow aSymWindow = new SymWindow();
@@ -111,7 +109,6 @@ public class BankFrm extends JFrame {
 
         reloadData();//added for testing
     }
-
 
     /*****************************************************
      * The entry point for this application.
@@ -136,7 +133,6 @@ public class BankFrm extends JFrame {
             System.exit(1);
         }
     }
-
 
     JPanel JPanel1 = new JPanel();
     JButton JButton_PerAC = new JButton();
@@ -311,27 +307,25 @@ public class BankFrm extends JFrame {
         JDialogGenBill billFrm = new JDialogGenBill();
         billFrm.setBounds(450, 20, 400, 350);
         billFrm.show();
-
     }
 
-    void reloadData(){
+    void reloadData() {
         int size = model.getRowCount();
-        for (int i = size - 1; i >= 0 ; i--)
+        for (int i = size - 1; i >= 0; i--)
             model.removeRow(i);
 
         AccountService service = new AccountServiceImpl();
         Collection<Account> col = service.getAllAccounts().stream().
                 filter(account -> ((account.getAccountType().equals(AccountType.SAVING)) || (account.getAccountType().equals(AccountType.CHECKING))))
-                        .collect(Collectors.toList());
+                .collect(Collectors.toList());
         col.forEach(account -> {
             rowdata[0] = account.getAccountNumber();
             rowdata[1] = account.getCustomer().getName();
             rowdata[2] = account.getCustomer().getCity();
             rowdata[3] = account.getCustomer().getBirthday() == null ? "C" : "P";
-            rowdata[4] = account.getAccountType().equals(AccountType.SAVING)? "S" : "Ch";
+            rowdata[4] = account.getAccountType().equals(AccountType.SAVING) ? "S" : "Ch";
             rowdata[5] = account.getBalance() + "";
             model.addRow(rowdata);
         });
     }
-
 }
