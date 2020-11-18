@@ -2,22 +2,13 @@ package ui.ccard;
 /*
 		A basic implementation of the JDialog class.
 */
-
-import framework.bank.CompanyChekingInterestCalculation;
-import framework.bank.CompanySavingInterestCalculation;
 import framework.common.Account;
 import framework.common.AccountService;
 import framework.common.AccountServiceImpl;
 import framework.common.AccountType;
-<<<<<<< HEAD
-import framework.creditcard.CreditCard;
 import framework.creditcard.GoldCreditCard;
-=======
 import framework.creditcard.BronzeCreditCard;
-import framework.creditcard.CreditCard;
-import framework.creditcard.GoldCreditCard;
 import framework.creditcard.SilverCreditCard;
->>>>>>> 26a4d1366917097f06ddeb65bef6a5a5100d0360
 
 public class JDialog_AddCCAccount extends javax.swing.JDialog {
     private CardFrm parentframe;
@@ -220,59 +211,11 @@ public class JDialog_AddCCAccount extends javax.swing.JDialog {
 			creditCard.setAccountType(AccountType.BRONZE);
 			creditCard.setCcinterestCalculation(new BronzeCreditCard());
 		}
-<<<<<<< HEAD
-	}
-
-	void JButtonOK_actionPerformed(java.awt.event.ActionEvent event)
-	{
-       parentframe.clientName=JTextField_NAME.getText();
-       parentframe.street=JTextField_STR.getText();
-       parentframe.city=JTextField_CT.getText();
-       parentframe.zip=JTextField_ZIP.getText();
-       parentframe.state=JTextField_ST.getText();
-       parentframe.ccnumber=JTextField_CCNR.getText();
-       parentframe.expdate=JTextField_ExpDate.getText();
-       if (JRadioButton_Gold.isSelected())
-           parentframe.accountType="Gold";
-           else{
-            if (JRadioButton_Silver.isSelected())
-                parentframe.accountType="Silver";
-                else
-                parentframe.accountType="Bronze";
-           }
-           
-	   parentframe.newaccount=true;
-           //createAccount --- Biniam
-
-		AccountService service = new AccountServiceImpl();
-        Account account = new CreditCard(parentframe.ccnumber.trim());
-        account = service.createAccount(parentframe.ccnumber.trim(), parentframe.clientName.trim(), parentframe.street.trim(),
-				parentframe.city.trim(), parentframe.state.trim(), parentframe.zip.trim(),JTextField_Email.getText().trim());
-
-		if (JRadioButton_Gold.isSelected()) {
-			account.setAccountType(AccountType.GOLD);
-			account.setCcinterestCalculation(new GoldCreditCard());
-		}
-		else if(JRadioButton_Silver.isSelected()) {
-			account.setAccountType(AccountType.SILVER);
-			account.setCcinterestCalculation(new GoldCreditCard());
-		} else {
-			account.setAccountType(AccountType.BRONZE);
-			account.setCcinterestCalculation(new GoldCreditCard());
-		}
-       dispose();
 	}
 
 	void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event)
 	{
     //make this frame invisible if Cancel button is clicked
-=======
->>>>>>> 26a4d1366917097f06ddeb65bef6a5a5100d0360
-        dispose();
-    }
-
-    void JButtonCalcel_actionPerformed(java.awt.event.ActionEvent event) {
-        //make this frame invisible if Cancel button is clicked
         dispose();
     }
 }
