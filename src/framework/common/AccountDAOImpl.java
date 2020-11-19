@@ -4,6 +4,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class AccountDAOImpl implements AccountDAO {
+	private volatile static AccountDAOImpl uniqueInstance;
+
+	private AccountDAOImpl(){}
+
+	public static AccountDAOImpl getInstance(){
+		if(uniqueInstance == null) {
+			synchronized (AccountDAOImpl.class){
+				if(uniqueInstance == null){
+					uniqueInstance = new AccountDAOImpl();
+				}
+			}
+		}
+		return uniqueInstance;
+	}
+
 	Collection<Account> accountlist = new ArrayList<Account>();
 
 	Collection<Customer> customerlist = new ArrayList<Customer>();
