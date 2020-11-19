@@ -294,7 +294,7 @@ public class BankFrm extends JFrame {
                     model.setValueAt(String.format("%.2f", newamount), selection, 5);
 //                model.setValueAt(String.valueOf(newamount), selection, 5);
                 else {
-                    JOptionPane.showMessageDialog(JButton_Withdraw, " Account " + accnr + " : balance is negative: $" + String.valueOf(newamount) + " !", "Warning: negative balance", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(JButton_Withdraw, " Account " + accnr + " : balance is less than: $" + String.valueOf(deposit) + " !", "Warning: The withdraw money must be less than balance", JOptionPane.WARNING_MESSAGE);
                 }
             }
         }
