@@ -40,36 +40,22 @@ public class CreditCard extends Account {
     public void calculateInterest() {
     }
 
+    @Override
     public void deposit(double amount) {
         AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
         getEntryList().add(entry);
-        if(this.getInterestCalculation() instanceof PersonalChekingInterestCalculation || this.getInterestCalculation() instanceof PersonalSavingInterestCalculation){
-            if(amount > 400) {
-                this.measureChanges(entry);
-                System.out.println("The amount is greater than 400");
-            }
-        }
-        if(this.getInterestCalculation() instanceof CompanyChekingInterestCalculation || this.getInterestCalculation() instanceof CompanySavingInterestCalculation){
-            this.measureChanges(entry);
-            System.out.println("The company Credit Card has had a deposit.");
-        }
-//        if (amount > 500)
-//            this.measureChanges(entry);
     }
-
 
     @Override
     public void withdraw(double amount) {
         AccountEntry entry = new AccountEntry(-amount, "withdraw", "", "");
-        if (this.getBalance() + getLimit() < amount)
+        if (this.getBalance() + getLimit() < amount) {
             this.measureChanges(entry);
-        else if( this.getInterestCalculation() instanceof CompanySavingInterestCalculation || getInterestCalculation() instanceof CompanyChekingInterestCalculation){
+            return;
+        }
+        if(amount > 400) {
             this.measureChanges(entry);
-            System.out.println("Company Credit Card has been withdrawn");
-        } else if( this.getInterestCalculation() instanceof PersonalSavingInterestCalculation || getInterestCalculation() instanceof PersonalChekingInterestCalculation){
-            if(amount > 400)
-                this.measureChanges(entry);
-            System.out.println("Personal Account has been Withdrawn.");
+            System.out.println("Personal Account has been Withdrawn over $400");
         }
         getEntryList().add(entry);
     }

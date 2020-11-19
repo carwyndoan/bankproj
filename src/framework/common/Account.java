@@ -39,16 +39,25 @@ public class Account extends Observable {
 	public void deposit(double amount) {
 		AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
 		entryList.add(entry);
-		if (amount > 500)
+		if(getCustomer().getNumofemployees() > 0) //deposit company account
+		{
+			this.measureChanges(entry);
+		}
+		if (getCustomer().getBirthday() != null && amount > 400) //deposit personal account
 			this.measureChanges(entry);
 	}
 
 	public void withdraw(double amount) {
 		AccountEntry entry = new AccountEntry(amount, "withdraw", "", "");
-		if (this.getBalance() < amount)
+		if (this.getBalance() < amount) {
 			this.measureChanges(entry);
-		else
-			entryList.add(entry);
+			return;
+		}
+		if(getCustomer().getBirthday() != null && amount > 500)//withdraw personal acc over 500$
+		{
+			measureChanges(entry);
+		}
+		entryList.add(entry);
 	}
 
 	public void interest(double amount) {
