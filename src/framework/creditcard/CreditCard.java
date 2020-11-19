@@ -1,12 +1,7 @@
 package framework.creditcard;
 
 import framework.common.Account;
-import framework.common.AccountEntry;
-
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 
 public class CreditCard extends Account {
 
@@ -36,26 +31,14 @@ public class CreditCard extends Account {
     }
 
     @Override
-    public void withdraw(double amount) {
-        AccountEntry entry = new AccountEntry(-amount, "withdraw", "", "");
-        if (this.getBalance() + getLimit() < amount)
-            this.measureChanges(entry);
-        else
-            getEntryList().add(entry);
-    }
-
-    @Override
     public void calculateInterest() {
-//        double interest = getCcinterestCalculation().monthlyInterest();
-//        double totalInterest = this.getBalance() * interest;
-//        this.interest(totalInterest);
     }
 
     @Override
     public String billingReport() {
         double previousBalance = this.getPreviousBalance();
-        double totalCharge = this.getTotalDebits();
-        double totalCredit = this.getTotalCredits();
+        double totalCharge = this.getCurrentDebits();
+        double totalCredit = this.getCurrentCredits();
         double MI = this.getCcinterestCalculation().monthlyInterest();
         double MP = this.getCcinterestCalculation().minimumPayment();
         double newBalance = previousBalance - totalCredit + totalCharge + MI * (previousBalance - totalCredit);

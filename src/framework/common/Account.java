@@ -33,11 +33,7 @@ public class Account extends Observable {
 	}
 
 	public double getBalance() {
-		double balance = 0;
-		for (AccountEntry entry : entryList) {
-			balance += entry.getAmount();
-		}
-		return balance;
+		return getTotalCredits() - getTotalDebits();
 	}
 
 	public void deposit(double amount) {
@@ -48,7 +44,7 @@ public class Account extends Observable {
 	}
 
 	public void withdraw(double amount) {
-		AccountEntry entry = new AccountEntry(-amount, "withdraw", "", "");
+		AccountEntry entry = new AccountEntry(amount, "withdraw", "", "");
 		if (this.getBalance() < amount)
 			this.measureChanges(entry);
 		else
@@ -131,8 +127,59 @@ public class Account extends Observable {
 				.mapToDouble(AccountEntry::getAmount).sum();
 	}
 
+	public double getCurrentCredits() {
+		LocalDate day = LocalDate.now();
+		day = day.minusDays(day.getDayOfMonth() - 1);
+		Date firstDate = Date.from(day.atStartOfDay()
+				.atZone(ZoneId.systemDefault())
+				.toInstant());
+		day = day.plusMonths(1).minusDays(day.getDayOfMonth());
+		Date lastDate = Date.from(day.atStartOfDay()
+				.atZone(ZoneId.systemDefault())
+				.toInstant());
+		return this.getEntryList().stream()
+				.filter(entry -> entry.getDate().before(lastDate))
+				.filter(entry -> entry.getDate().after(firstDate))
+				.filter(entry -> entry.getDescription().equals("deposit"))
+				.mapToDouble(AccountEntry::getAmount).sum();
+	}
+
+	public double getCurrentDebits() {
+		LocalDate day = LocalDate.now();
+		day = day.minusDays(day.getDayOfMonth() - 1);
+		Date firstDate = Date.from(day.atStartOfDay()
+				.atZone(ZoneId.systemDefault())
+				.toInstant());
+		day = day.plusMonths(1).minusDays(day.getDayOfMonth());
+		Date lastDate = Date.from(day.atStartOfDay()
+				.atZone(ZoneId.systemDefault())
+				.toInstant());
+		return this.getEntryList().stream()
+				.filter(entry -> entry.getDate().before(lastDate))
+				.filter(entry -> entry.getDate().after(firstDate))
+				.filter(entry -> entry.getDescription().equals("withdraw"))
+				.mapToDouble(AccountEntry::getAmount).sum();
+	}
+
 	private double getTotalInterest() {
 		return this.getEntryList().stream()
+				.filter(entry -> entry.getDescription().equals("interest"))
+				.mapToDouble(AccountEntry::getAmount).sum();
+	}
+
+	private double getCurrentInterest() {
+		LocalDate day = LocalDate.now();
+		day = day.minusDays(day.getDayOfMonth() - 1);
+		Date firstDate = Date.from(day.atStartOfDay()
+				.atZone(ZoneId.systemDefault())
+				.toInstant());
+		day = day.plusMonths(1).minusDays(day.getDayOfMonth());
+		Date lastDate = Date.from(day.atStartOfDay()
+				.atZone(ZoneId.systemDefault())
+				.toInstant());
+		return this.getEntryList().stream()
+				.filter(entry -> entry.getDate().before(lastDate))
+				.filter(entry -> entry.getDate().after(firstDate))
 				.filter(entry -> entry.getDescription().equals("interest"))
 				.mapToDouble(AccountEntry::getAmount).sum();
 	}
@@ -144,9 +191,17 @@ public class Account extends Observable {
 				.atZone(ZoneId.systemDefault())
 				.toInstant());
 
-		return this.getEntryList().stream()
+		double deposit = this.getEntryList().stream()
 				.filter(entry -> entry.getDate().before(firstDate))
+				.filter(entry -> entry.getDescription().equals("deposit"))
 				.mapToDouble(AccountEntry::getAmount).sum();
+
+		double withdraw = this.getEntryList().stream()
+				.filter(entry -> entry.getDate().before(firstDate))
+				.filter(entry -> entry.getDescription().equals("withdraw"))
+				.mapToDouble(AccountEntry::getAmount).sum();
+
+		return deposit - withdraw;
 	}
 
 	public void calculateInterest(){
@@ -165,9 +220,9 @@ public class Account extends Observable {
 		report.append( "\r\n Account number=" + getAccountNumber()) ;
 		report.append("\r\n Account type=" + getAccountType());
 		report.append( "\r\nPrevious balance : $" + getPreviousBalance());
-		report.append( "\n Total debit : $ " + getTotalDebits());
-		report.append( "\n Total credit : $ " + getTotalCredits());
-		report.append( "\n Total interest : $ " + getTotalInterest());
+		report.append( "\n Total debit : $ " + getCurrentDebits());
+		report.append( "\n Total credit : $ " + getCurrentCredits());
+		report.append( "\n Total interest : $ " + getCurrentInterest());
 		report.append( "\n New Balance  : $ " + getBalance());
 		report.append( "\r\n");
 		report.append( "\r\n");
