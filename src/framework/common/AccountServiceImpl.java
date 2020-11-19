@@ -2,10 +2,7 @@ package framework.common;
 
 import framework.bank.PersonalChekingInterestCalculation;
 import framework.bank.PersonalSavingInterestCalculation;
-import framework.creditcard.BronzeCreditCard;
-import framework.creditcard.CreditCard;
-import framework.creditcard.GoldCreditCard;
-import framework.creditcard.SilverCreditCard;
+import framework.creditcard.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -103,8 +100,8 @@ public class AccountServiceImpl implements AccountService {
 			account = new CreditCard(accountNumber);
 			account.setCustomer(customer);
 			accountDAO.saveAccount(account);
-			createObservers(account);
 		}
+		new CreditCardEmailSender(account);
 		return account;
 	}
 

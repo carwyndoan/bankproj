@@ -1,6 +1,7 @@
 package framework.creditcard;
 
 import framework.common.Account;
+import framework.common.AccountEntry;
 import framework.javaMailApi.SendEmailClass;
 
 import java.util.Observable;
@@ -15,19 +16,15 @@ public class CreditCardEmailSender implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        Account account = (Account) o;
-        String email = account.getCustomer().getEmail();
-        String message = "account number: " + account.getAccountNumber() + " balance: " + account.getBalance();
-        sendEmail(message, email);
-    }
-
-    void sendEmail(String message, String email){
-        try {
-            SendEmailClass.sendMailTo(email);
-        } catch (Exception e) {
-            e.printStackTrace();
+        Account acc = (Account)o;
+        AccountEntry entry = (AccountEntry) arg;
+        if (entry.getDescription().equals("withdraw")) {
+            try {
+                SendEmailClass.sendMailTo(acc.getCustomer().getEmail());
+                System.out.println("The amount is greater than 400$.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        System.out.println("EmailSender: " + message);
-        System.out.println("---------------");
     }
 }
