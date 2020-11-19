@@ -33,7 +33,7 @@ public class Account extends Observable {
 	}
 
 	public double getBalance() {
-		return getTotalCredits() - getTotalDebits();
+		return getTotalCredits() - getTotalDebits() + getTotalInterest();
 	}
 
 	public void deposit(double amount) {
