@@ -1,6 +1,7 @@
 package framework.common;
 
 import framework.javaMailApi.SendEmailClass;
+import framework.javaMailApi.SendEmailPrivate;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -17,8 +18,7 @@ public class EmailSender implements Observer {
         AccountEntry entry = (AccountEntry) arg;
         if (entry.getDescription().equals("deposit")) {
             try {
-                //SendEmailClass.sendMailTo(acc.getCustomer().getEmail());
-                System.out.println(acc.getCustomer().getEmail());
+//                SendEmailPrivate.sendMailTo(acc.getCustomer().getEmail(),"The deposit amount is greater than $500" );
                 System.out.println("The deposit amount is greater than $500");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -26,7 +26,7 @@ public class EmailSender implements Observer {
         }
         else if (entry.getDescription().equals("withdraw")){
             try {
-                //SendEmailClass.sendMailTo(acc.getCustomer().getEmail());
+//                SendEmailPrivate.sendMailTo(acc.getCustomer().getEmail(), "The amount is greater than your balance. The withdraw must be less than your amount");
                 System.out.println("The amount is greater than your balance. The withdraw must be less than your amount");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -34,7 +34,7 @@ public class EmailSender implements Observer {
         }
         else if (entry.getDescription().equals("interest")){
             try {
-                //SendEmailClass.sendMailTo(acc.getCustomer().getEmail());
+//                SendEmailPrivate.sendMailTo(acc.getCustomer().getEmail(), "The new interest is " + entry.getAmount() );
                 System.out.println("The new interest is " + entry.getAmount());
             } catch (Exception e) {
                 e.printStackTrace();
