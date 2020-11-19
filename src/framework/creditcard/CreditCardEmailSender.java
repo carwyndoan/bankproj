@@ -21,7 +21,13 @@ public class CreditCardEmailSender implements Observer {
         if (entry.getDescription().equals("withdraw")) {
             try {
                 SendEmailClass.sendMailTo(acc.getCustomer().getEmail());
-                System.out.println("The amount is greater than 400$.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (entry.getDescription().equals("deposit")) {
+            try {
+                SendEmailClass.sendMailTo(acc.getCustomer().getEmail());
             } catch (Exception e) {
                 e.printStackTrace();
             }
