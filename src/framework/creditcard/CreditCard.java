@@ -1,6 +1,8 @@
 package framework.creditcard;
 
 import framework.common.Account;
+import framework.common.AccountEntry;
+
 import java.time.LocalDate;
 
 public class CreditCard extends Account {
@@ -35,14 +37,26 @@ public class CreditCard extends Account {
     }
 
     @Override
+    public void withdraw(double amount) {
+        AccountEntry entry = new AccountEntry(amount, "withdraw", "", "");
+        if (this.getBalance() + getLimit() < amount)
+            this.measureChanges(entry);
+        else
+            this.getEntryList().add(entry);
+    }
+
+    @Override
     public String billingReport() {
         double previousBalance = this.getPreviousBalance();
         double totalCharge = this.getCurrentDebits();
         double totalCredit = this.getCurrentCredits();
         double MI = this.getCcinterestCalculation().monthlyInterest();
         double MP = this.getCcinterestCalculation().minimumPayment();
-        double newBalance = previousBalance - totalCredit + totalCharge + MI * (previousBalance - totalCredit);
+        double interest = MI * (previousBalance - totalCredit);
+        if(interest < 0) interest = 0;
+        double newBalance = previousBalance - totalCredit + totalCharge + interest;
         double totalDue = MP * newBalance;
+        if(totalDue < 0) totalDue = 0;
         StringBuilder report =new StringBuilder();
         report.append("Name= " +this.getCustomer().getName());
         report.append("\n Address=" +this.getCustomer().getStreet());
