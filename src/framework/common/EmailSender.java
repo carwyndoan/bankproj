@@ -1,7 +1,7 @@
 package framework.common;
 
 import framework.javaMailApi.SendEmailClass;
-import framework.javaMailApi.SendEmailPrivate;
+//import framework.javaMailApi.SendEmailPrivate;
 
 import java.util.Observable;
 import java.util.Observer;
