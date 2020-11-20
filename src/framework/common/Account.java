@@ -39,21 +39,27 @@ public class Account extends Observable {
     public void deposit(double amount) {
         AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
         entryList.add(entry);
-        if (getCustomer().getNumofemployees() > 0) //deposit company account
-        {
-            this.measureChanges(entry);
-        } else if ((getCustomer().getBirthday() != null) && (amount > 400)) //deposit personal account
-            this.measureChanges(entry);
+        String mess = "";
+        if (getCustomer().getNumofemployees() > 0){ //deposit company account
+        	mess = "Your deposit is " + amount;
+        	this.measureChanges(mess);
+        } else if ((getCustomer().getBirthday() != null) && (amount > 500)) {//deposit personal account
+        	mess = "Your deposit is "+ amount;
+			this.measureChanges(mess);
+		}
     }
 
     public void withdraw(double amount) {
         AccountEntry entry = new AccountEntry(amount, "withdraw", "", "");
+        String mess = "";
         if (this.getBalance() < amount) {
-            this.measureChanges(entry);
+        	mess = "The withdrawal must be less than your balance";
+            this.measureChanges(mess);
             return;
         }
         if (getCustomer().getBirthday() != null && amount > 500){//withdraw personal acc over 500$
-            measureChanges(entry);
+			mess = "The withdrawal is "+ amount;
+            measureChanges(mess);
         }
         entryList.add(entry);
     }
@@ -62,7 +68,8 @@ public class Account extends Observable {
         AccountEntry entry = new AccountEntry(amount, "interest", "", "");
         entryList.add(entry);
         //TODO: check amount and call measureChanges
-        measureChanges(entry);
+		String mess = "Your interest of this month is " + amount;
+        measureChanges(mess);
     }
 
     public void transferFunds(Account toAccount, double amount, String description) {
@@ -117,6 +124,11 @@ public class Account extends Observable {
         this.setChanged();
         this.notifyObservers(entry);
     }
+
+	public void measureChanges(String message) {
+		this.setChanged();
+		this.notifyObservers(message);
+	}
 
     public InterestCalculation getInterestCalculation() {
         return interestCalculation;
