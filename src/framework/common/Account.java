@@ -8,234 +8,244 @@ import java.time.ZoneId;
 import java.util.*;
 
 public class Account extends Observable {
-	private Customer customer;
+    private Customer customer;
 
-	private String accountNumber;
+    private String accountNumber;
 
-	private List<AccountEntry> entryList = new ArrayList<AccountEntry>();
+    private List<AccountEntry> entryList = new ArrayList<AccountEntry>();
 
-	private InterestCalculation interestCalculation;
+    private InterestCalculation interestCalculation;
 
-	private CreditCardStrategyInterface ccinterestCalculation;
+    private CreditCardStrategyInterface ccinterestCalculation;
 
-	private AccountType accountType;
+    private AccountType accountType;
 
-	public Account(String accountNumber) {
-		this.accountNumber = accountNumber;
-	}
+    public Account(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 
-	public String getAccountNumber() {
-		return accountNumber;
-	}
+    public String getAccountNumber() {
+        return accountNumber;
+    }
 
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
-	}
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 
-	public double getBalance() {
-		return getTotalCredits() - getTotalDebits() + getTotalInterest();
-	}
+    public double getBalance() {
+        return getTotalCredits() - getTotalDebits() + getTotalInterest();
+    }
 
-	public void deposit(double amount) {
-		AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
-		entryList.add(entry);
-		if(getCustomer().getNumofemployees() > 0) //deposit company account
-		{
-			this.measureChanges(entry);
+    public void deposit(double amount) {
+        AccountEntry entry = new AccountEntry(amount, "deposit", "", "");
+        entryList.add(entry);
+        String mess = "";
+        if (getCustomer().getNumofemployees() > 0){ //deposit company account
+        	mess = "Your deposit is " + amount;
+        	this.measureChanges(mess);
+        } else if ((getCustomer().getBirthday() != null) && (amount > 500)) {//deposit personal account
+        	mess = "Your deposit is "+ amount;
+			this.measureChanges(mess);
 		}
-		if (getCustomer().getBirthday() != null && amount > 400) //deposit personal account
-			this.measureChanges(entry);
-	}
+    }
 
-	public void withdraw(double amount) {
-		AccountEntry entry = new AccountEntry(amount, "withdraw", "", "");
-		if (this.getBalance() < amount) {
-			this.measureChanges(entry);
-			return;
-		}
-		if(getCustomer().getBirthday() != null && amount > 500)//withdraw personal acc over 500$
-		{
-			measureChanges(entry);
-		}
-		entryList.add(entry);
-	}
+    public void withdraw(double amount) {
+        AccountEntry entry = new AccountEntry(amount, "withdraw", "", "");
+        String mess = "";
+        if (this.getBalance() < amount) {
+        	mess = "The withdrawal must be less than your balance";
+            this.measureChanges(mess);
+            return;
+        }
+        if (getCustomer().getBirthday() != null && amount > 500){//withdraw personal acc over 500$
+			mess = "The withdrawal is "+ amount;
+            measureChanges(mess);
+        }
+        entryList.add(entry);
+    }
 
-	public void interest(double amount) {
-		AccountEntry entry = new AccountEntry(amount, "interest", "", "");
-		entryList.add(entry);
-		//TODO: check amount and call measureChanges
-		measureChanges(entry);
-	}
+    public void interest(double amount) {
+        AccountEntry entry = new AccountEntry(amount, "interest", "", "");
+        entryList.add(entry);
+        //TODO: check amount and call measureChanges
+		String mess = "Your interest of this month is " + amount;
+        measureChanges(mess);
+    }
 
-	public void transferFunds(Account toAccount, double amount, String description) {
-		AccountEntry fromEntry = new AccountEntry(-amount, description, toAccount.getAccountNumber(),
-				toAccount.getCustomer().getName());
-		AccountEntry toEntry = new AccountEntry(amount, description, toAccount.getAccountNumber(),
-				toAccount.getCustomer().getName());
-		
-		entryList.add(fromEntry);
-		
-		toAccount.addEntry(toEntry);
-		//TODO: check amount and call measureChanges
-	}
+    public void transferFunds(Account toAccount, double amount, String description) {
+        AccountEntry fromEntry = new AccountEntry(-amount, description, toAccount.getAccountNumber(),
+                toAccount.getCustomer().getName());
+        AccountEntry toEntry = new AccountEntry(amount, description, toAccount.getAccountNumber(),
+                toAccount.getCustomer().getName());
 
-	private void addEntry(AccountEntry entry) {
-		entryList.add(entry);
-	}
+        entryList.add(fromEntry);
 
-	public Customer getCustomer() {
-		return customer;
-	}
+        toAccount.addEntry(toEntry);
+        //TODO: check amount and call measureChanges
+    }
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+    private void addEntry(AccountEntry entry) {
+        entryList.add(entry);
+    }
 
-	public AccountType getAccountType() {
-		return accountType;
-	}
+    public Customer getCustomer() {
+        return customer;
+    }
 
-	public void setAccountType(AccountType accountType) {
-		this.accountType = accountType;
-	}
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
-	public Collection<AccountEntry> getEntryList() {
-		return entryList;
-	}
+    public AccountType getAccountType() {
+        return accountType;
+    }
 
-	public void setInterestCalculation(InterestCalculation interestCalculation) {
-		this.interestCalculation = interestCalculation;
-	}
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
+    }
 
-	public CreditCardStrategyInterface getCcinterestCalculation() {
-		return ccinterestCalculation;
-	}
+    public Collection<AccountEntry> getEntryList() {
+        return entryList;
+    }
 
-	public void setCcinterestCalculation(CreditCardStrategyInterface ccinterestCalculation) {
-		this.ccinterestCalculation = ccinterestCalculation;
-	}
+    public void setInterestCalculation(InterestCalculation interestCalculation) {
+        this.interestCalculation = interestCalculation;
+    }
 
-	public void measureChanges(AccountEntry entry) {
+    public CreditCardStrategyInterface getCcinterestCalculation() {
+        return ccinterestCalculation;
+    }
+
+    public void setCcinterestCalculation(CreditCardStrategyInterface ccinterestCalculation) {
+        this.ccinterestCalculation = ccinterestCalculation;
+    }
+
+    public void measureChanges(AccountEntry entry) {
+        this.setChanged();
+        this.notifyObservers(entry);
+    }
+
+	public void measureChanges(String message) {
 		this.setChanged();
-		this.notifyObservers(entry);
+		this.notifyObservers(message);
 	}
 
-	public InterestCalculation getInterestCalculation() {
-		return interestCalculation;
-	}
+    public InterestCalculation getInterestCalculation() {
+        return interestCalculation;
+    }
 
-	public double getTotalCredits() {
-		return this.getEntryList().stream()
-				.filter(entry -> entry.getDescription().equals("deposit"))
-				.mapToDouble(AccountEntry::getAmount).sum();
-	}
+    public double getTotalCredits() {
+        return this.getEntryList().stream()
+                .filter(entry -> entry.getDescription().equals("deposit"))
+                .mapToDouble(AccountEntry::getAmount).sum();
+    }
 
-	public double getTotalDebits() {
-		return this.getEntryList().stream()
-				.filter(entry -> entry.getDescription().equals("withdraw"))
-				.mapToDouble(AccountEntry::getAmount).sum();
-	}
+    public double getTotalDebits() {
+        return this.getEntryList().stream()
+                .filter(entry -> entry.getDescription().equals("withdraw"))
+                .mapToDouble(AccountEntry::getAmount).sum();
+    }
 
-	public double getCurrentCredits() {
-		LocalDate day = LocalDate.now();
-		day = day.minusDays(day.getDayOfMonth() - 1);
-		Date firstDate = Date.from(day.atStartOfDay()
-				.atZone(ZoneId.systemDefault())
-				.toInstant());
-		day = day.plusMonths(1).minusDays(day.getDayOfMonth());
-		Date lastDate = Date.from(day.atStartOfDay()
-				.atZone(ZoneId.systemDefault())
-				.toInstant());
-		return this.getEntryList().stream()
-				.filter(entry -> entry.getDate().before(lastDate))
-				.filter(entry -> entry.getDate().after(firstDate))
-				.filter(entry -> entry.getDescription().equals("deposit"))
-				.mapToDouble(AccountEntry::getAmount).sum();
-	}
+    public double getCurrentCredits() {
+        LocalDate day = LocalDate.now();
+        day = day.minusDays(day.getDayOfMonth() - 1);
+        Date firstDate = Date.from(day.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+        day = day.plusMonths(1).minusDays(day.getDayOfMonth());
+        Date lastDate = Date.from(day.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+        return this.getEntryList().stream()
+                .filter(entry -> entry.getDate().before(lastDate))
+                .filter(entry -> entry.getDate().after(firstDate))
+                .filter(entry -> entry.getDescription().equals("deposit"))
+                .mapToDouble(AccountEntry::getAmount).sum();
+    }
 
-	public double getCurrentDebits() {
-		LocalDate day = LocalDate.now();
-		day = day.minusDays(day.getDayOfMonth() - 1);
-		Date firstDate = Date.from(day.atStartOfDay()
-				.atZone(ZoneId.systemDefault())
-				.toInstant());
-		day = day.plusMonths(1).minusDays(day.getDayOfMonth());
-		Date lastDate = Date.from(day.atStartOfDay()
-				.atZone(ZoneId.systemDefault())
-				.toInstant());
-		return this.getEntryList().stream()
-				.filter(entry -> entry.getDate().before(lastDate))
-				.filter(entry -> entry.getDate().after(firstDate))
-				.filter(entry -> entry.getDescription().equals("withdraw"))
-				.mapToDouble(AccountEntry::getAmount).sum();
-	}
+    public double getCurrentDebits() {
+        LocalDate day = LocalDate.now();
+        day = day.minusDays(day.getDayOfMonth() - 1);
+        Date firstDate = Date.from(day.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+        day = day.plusMonths(1).minusDays(day.getDayOfMonth());
+        Date lastDate = Date.from(day.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+        return this.getEntryList().stream()
+                .filter(entry -> entry.getDate().before(lastDate))
+                .filter(entry -> entry.getDate().after(firstDate))
+                .filter(entry -> entry.getDescription().equals("withdraw"))
+                .mapToDouble(AccountEntry::getAmount).sum();
+    }
 
-	private double getTotalInterest() {
-		return this.getEntryList().stream()
-				.filter(entry -> entry.getDescription().equals("interest"))
-				.mapToDouble(AccountEntry::getAmount).sum();
-	}
+    private double getTotalInterest() {
+        return this.getEntryList().stream()
+                .filter(entry -> entry.getDescription().equals("interest"))
+                .mapToDouble(AccountEntry::getAmount).sum();
+    }
 
-	private double getCurrentInterest() {
-		LocalDate day = LocalDate.now();
-		day = day.minusDays(day.getDayOfMonth() - 1);
-		Date firstDate = Date.from(day.atStartOfDay()
-				.atZone(ZoneId.systemDefault())
-				.toInstant());
-		day = day.plusMonths(1).minusDays(day.getDayOfMonth());
-		Date lastDate = Date.from(day.atStartOfDay()
-				.atZone(ZoneId.systemDefault())
-				.toInstant());
-		return this.getEntryList().stream()
-				.filter(entry -> entry.getDate().before(lastDate))
-				.filter(entry -> entry.getDate().after(firstDate))
-				.filter(entry -> entry.getDescription().equals("interest"))
-				.mapToDouble(AccountEntry::getAmount).sum();
-	}
+    private double getCurrentInterest() {
+        LocalDate day = LocalDate.now();
+        day = day.minusDays(day.getDayOfMonth() - 1);
+        Date firstDate = Date.from(day.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+        day = day.plusMonths(1).minusDays(day.getDayOfMonth());
+        Date lastDate = Date.from(day.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+        return this.getEntryList().stream()
+                .filter(entry -> entry.getDate().before(lastDate))
+                .filter(entry -> entry.getDate().after(firstDate))
+                .filter(entry -> entry.getDescription().equals("interest"))
+                .mapToDouble(AccountEntry::getAmount).sum();
+    }
 
-	public double getPreviousBalance() {
-		LocalDate firstDay = LocalDate.now();
-		firstDay = firstDay.minusDays(firstDay.getDayOfMonth() - 1);
-		Date firstDate = Date.from(firstDay.atStartOfDay()
-				.atZone(ZoneId.systemDefault())
-				.toInstant());
+    public double getPreviousBalance() {
+        LocalDate firstDay = LocalDate.now();
+        firstDay = firstDay.minusDays(firstDay.getDayOfMonth() - 1);
+        Date firstDate = Date.from(firstDay.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
 
-		double deposit = this.getEntryList().stream()
-				.filter(entry -> entry.getDate().before(firstDate))
-				.filter(entry -> entry.getDescription().equals("deposit"))
-				.mapToDouble(AccountEntry::getAmount).sum();
+        double deposit = this.getEntryList().stream()
+                .filter(entry -> entry.getDate().before(firstDate))
+                .filter(entry -> entry.getDescription().equals("deposit"))
+                .mapToDouble(AccountEntry::getAmount).sum();
 
-		double withdraw = this.getEntryList().stream()
-				.filter(entry -> entry.getDate().before(firstDate))
-				.filter(entry -> entry.getDescription().equals("withdraw"))
-				.mapToDouble(AccountEntry::getAmount).sum();
+        double withdraw = this.getEntryList().stream()
+                .filter(entry -> entry.getDate().before(firstDate))
+                .filter(entry -> entry.getDescription().equals("withdraw"))
+                .mapToDouble(AccountEntry::getAmount).sum();
 
-		return deposit - withdraw;
-	}
+        return deposit - withdraw;
+    }
 
-	public void calculateInterest(){
-		double interest = interestCalculation.getInterest();
-		double totalInterest = this.getBalance() * interest;
-		this.interest(totalInterest);
-	}
+    public void calculateInterest() {
+        double interest = interestCalculation.getInterest();
+        double totalInterest = this.getBalance() * interest;
+        this.interest(totalInterest);
+    }
 
-	public String billingReport() {
-		StringBuilder report =new StringBuilder();
-		report.append("Name= " + getCustomer().getName());
-		report.append("\n Address=" + getCustomer().getStreet());
-		report.append( ", "+ getCustomer().getCity() );
-		report.append(", "+ getCustomer().getState() );
-		report.append( ", " + getCustomer().getZip() );
-		report.append( "\r\n Account number=" + getAccountNumber()) ;
-		report.append("\r\n Account type=" + getAccountType());
-		report.append( "\r\nPrevious balance : $" + getPreviousBalance());
-		report.append( "\n Total debit : $ " + getCurrentDebits());
-		report.append( "\n Total credit : $ " + getCurrentCredits());
-		report.append( "\n Total interest : $ " + getCurrentInterest());
-		report.append( "\n New Balance  : $ " + getBalance());
-		report.append( "\r\n");
-		report.append( "\r\n");
-		System.out.println(report);
-		return report.toString();
-	}
+    public String billingReport() {
+        StringBuilder report = new StringBuilder();
+        report.append("Name= " + getCustomer().getName());
+        report.append("\n Address=" + getCustomer().getStreet());
+        report.append(", " + getCustomer().getCity());
+        report.append(", " + getCustomer().getState());
+        report.append(", " + getCustomer().getZip());
+        report.append("\r\n Account number=" + getAccountNumber());
+        report.append("\r\n Account type=" + getAccountType());
+        report.append("\r\nPrevious balance : $" + getPreviousBalance());
+        report.append("\n Total debit : $ " + getCurrentDebits());
+        report.append("\n Total credit : $ " + getCurrentCredits());
+        report.append("\n Total interest : $ " + getCurrentInterest());
+        report.append("\n New Balance  : $ " + getBalance());
+        report.append("\r\n");
+        report.append("\r\n");
+        System.out.println(report);
+        return report.toString();
+    }
 }
