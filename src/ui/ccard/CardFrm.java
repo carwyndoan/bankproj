@@ -195,6 +195,8 @@ public class CardFrm extends javax.swing.JFrame {
         JDialog_AddCCAccount ccac = new JDialog_AddCCAccount(thisframe);
         ccac.setBounds(450, 20, 300, 380);
         ccac.show();
+        
+        
 
         if (newaccount) {
             // add row to table
